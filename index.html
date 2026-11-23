@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0; url=dashboard.html">
+  <title>PulseAI — Redirecting</title>
+  <script>
+    window.location.href = localStorage.getItem('pulseai_token') ? 'dashboard.html' : 'login.html';
+  </script>
+</head>
+<body>
+  <p>Redirecting to <a href="dashboard.html">PulseAI Dashboard</a>...</p>
+</body>
+</html>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseAI — Settings</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-body">
+
+  <div class="ambient-glow" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <nav class="app-nav" aria-label="Main Navigation">
+      <div class="nav-brand">
+        <div class="brand-logo-symbol">
+          <svg width="22" height="14" viewBox="0 0 22 14" fill="currentColor">
+            <path d="M0 2h6v2H0zm8 0h6v2H8zm8 0h6v2h-6zM3 6h6v2H3zm8 0h6v2h-6zm8 0h3v2h-3zM6 10h6v2H6zm8 0h6v2h-6z"/>
+          </svg>
+        </div>
+        <span class="brand-wordmark">PulseAI</span>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <a href="dashboard.html" class="nav-item" aria-label="Dashboard">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="meals.html" class="nav-item" aria-label="Meals">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+            <span class="nav-label">Meals</span>
+          </a>
+        </li>
+        <li>
+          <a href="workouts.html" class="nav-item" aria-label="Workouts">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6.5 6.5 11 11"/>
+              <path d="m21 21-1-1"/>
+              <path d="m3 3 1 1"/>
+              <path d="m18 22 4-4"/>
+              <path d="m2 6 4-4"/>
+              <path d="m3 10 7-7"/>
+              <path d="m14 21 7-7"/>
+            </svg>
+            <span class="nav-label">Workouts</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-item active" aria-label="Settings" aria-current="page">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span class="nav-label">Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-footer">
+        <button type="button" class="btn-logout-icon" id="logoutBtn" title="Log out" aria-label="Log out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span class="logout-label">Logout</span>
+        </button>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="content-header">
+        <div>
+          <span class="header-kicker">ATHLETE PREFERENCES</span>
+          <h1 class="header-title">SETTINGS &amp; PROFILE</h1>
+        </div>
+      </header>
+
+      <div class="settings-container">
+        <div class="card settings-card">
+          <div class="card-header">
+            <span class="card-label">BIOMETRIC BASELINE</span>
+            <span class="mono-tag" id="userSinceTag">--</span>
+          </div>
+
+          <!-- Alert / Toast Banner -->
+          <div id="settingsAlert" class="alert-banner" style="display: none;">
+            <span id="settingsAlertMsg"></span>
+          </div>
+
+          <form id="settingsForm" class="bento-form">
+            <div class="form-row-duo">
+              <div class="form-group">
+                <label for="setName" class="form-label">Full Name</label>
+                <input type="text" id="setName" class="form-input" placeholder="Loading..." required>
+              </div>
+              <div class="form-group">
+                <label for="setEmail" class="form-label">Email Address</label>
+                <input type="email" id="setEmail" class="form-input" placeholder="Loading..." required>
+              </div>
+            </div>
+
+            <div class="form-row-triplet">
+              <div class="form-group">
+                <label for="setWeight" class="form-label">Weight (kg)</label>
+                <input type="number" id="setWeight" class="form-input" placeholder="Loading..." step="0.1" min="30" max="300" required>
+              </div>
+              <div class="form-group">
+                <label for="setHeight" class="form-label">Height (cm)</label>
+                <input type="number" id="setHeight" class="form-input" placeholder="Loading..." step="0.5" min="100" max="250" required>
+              </div>
+              <div class="form-group">
+                <label for="setCalories" class="form-label">Daily Calorie Target</label>
+                <input type="number" id="setCalories" class="form-input" placeholder="Loading..." step="50" min="1000" max="6000" required>
+              </div>
+            </div>
+
+            <div class="form-actions-split">
+              <button type="submit" class="btn-primary" id="saveSettingsBtn">SAVE PREFERENCES &gt;&gt;&gt;</button>
+              <button type="button" class="btn-delete" id="sessionLogoutBtn">Log Out Session</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/lamp.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!api.getToken()) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('logoutBtn').addEventListener('click', () => api.logout());
+      document.getElementById('sessionLogoutBtn').addEventListener('click', () => api.logout());
+
+      const nameInput = document.getElementById('setName');
+      const emailInput = document.getElementById('setEmail');
+      const weightInput = document.getElementById('setWeight');
+      const heightInput = document.getElementById('setHeight');
+      const caloriesInput = document.getElementById('setCalories');
+      const alertBox = document.getElementById('settingsAlert');
+      const alertMsg = document.getElementById('settingsAlertMsg');
+      const form = document.getElementById('settingsForm');
+
+      try {
+        const user = await api.get('/users/me');
+        nameInput.value = user.name || '';
+        emailInput.value = user.email || '';
+        weightInput.value = user.weight_kg !== null && user.weight_kg !== undefined ? user.weight_kg : '';
+        heightInput.value = user.height_cm !== null && user.height_cm !== undefined ? user.height_cm : '';
+        caloriesInput.value = user.calorie_target !== null && user.calorie_target !== undefined ? user.calorie_target : '';
+
+        nameInput.placeholder = '';
+        emailInput.placeholder = '';
+        weightInput.placeholder = '';
+        heightInput.placeholder = '';
+        caloriesInput.placeholder = '';
+
+        if (user.created_at) {
+          const year = new Date(user.created_at).getFullYear();
+          document.getElementById('userSinceTag').textContent = `ACTIVE SINCE ${year}`;
+        } else {
+          document.getElementById('userSinceTag').textContent = 'ATHLETE';
+        }
+      } catch (err) {
+        console.error('Failed to load profile:', err);
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertBox.style.display = 'none';
+
+        try {
+          const updated = await api.put('/users/me', {
+            name: nameInput.value.trim(),
+            email: emailInput.value.trim(),
+            weight_kg: parseFloat(weightInput.value),
+            height_cm: parseFloat(heightInput.value),
+            calorie_target: parseInt(caloriesInput.value, 10)
+          });
+          api.setUser(updated);
+
+          alertBox.className = 'alert-banner alert-success';
+          alertMsg.textContent = 'Settings updated successfully.';
+          alertBox.style.display = 'flex';
+        } catch (err) {
+          alertBox.className = 'alert-banner alert-error';
+          alertMsg.textContent = err.message || 'Error updating settings';
+          alertBox.style.display = 'flex';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

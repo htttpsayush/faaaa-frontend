@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseAI — Nutrition & Meals</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-body">
+
+  <div class="app-shell">
+    <nav class="app-nav" aria-label="Main Navigation">
+      <div class="nav-brand">
+        <div class="brand-logo-symbol">
+          <svg width="24" height="15" viewBox="0 0 22 14" fill="currentColor">
+            <path d="M0 2h6v2H0zm8 0h6v2H8zm8 0h6v2h-6zM3 6h6v2H3zm8 0h6v2h-6zm8 0h3v2h-3zM6 10h6v2H6zm8 0h6v2h-6z"/>
+          </svg>
+        </div>
+        <span class="brand-wordmark">PulseAI</span>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <a href="dashboard.html" class="nav-item" aria-label="Dashboard">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="meals.html" class="nav-item active" aria-label="Meals" aria-current="page">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+            <span class="nav-label">Meals</span>
+          </a>
+        </li>
+        <li>
+          <a href="workouts.html" class="nav-item" aria-label="Workouts">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6.5 6.5 11 11"/>
+              <path d="m21 21-1-1"/>
+              <path d="m3 3 1 1"/>
+              <path d="m18 22 4-4"/>
+              <path d="m2 6 4-4"/>
+              <path d="m3 10 7-7"/>
+              <path d="m14 21 7-7"/>
+            </svg>
+            <span class="nav-label">Workouts</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-item" aria-label="Settings">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span class="nav-label">Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-footer">
+        <button type="button" class="btn-logout-icon" id="logoutBtn" title="Log out" aria-label="Log out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span class="logout-label">Logout</span>
+        </button>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="content-header">
+        <div>
+          <span class="header-kicker">NUTRITION &amp; METABOLISM // MACROS</span>
+          <h1 class="header-title">Daily Nutrition</h1>
+        </div>
+      </header>
+
+      <!-- Today's Daily Totals Banner -->
+      <section class="card nutrition-totals-card" aria-label="Daily Nutrition Totals">
+        <div class="totals-header">
+          <span class="card-label">TODAY'S MACRONUTRIENT TOTALS</span>
+          <span class="card-badge" id="dailyGoalPct">--</span>
+        </div>
+        <div class="totals-grid">
+          <div class="total-metric">
+            <span class="tm-label">CALORIES</span>
+            <span class="pixel-number tm-val" id="totalCalsVal">--</span>
+            <span class="tm-sub" id="targetCalsSub">Target: -- kcal</span>
+          </div>
+          <div class="total-metric">
+            <span class="tm-label">PROTEIN</span>
+            <span class="pixel-number tm-val" id="totalProteinVal">--<small>g</small></span>
+            <span class="tm-sub">4 kcal / g</span>
+          </div>
+          <div class="total-metric">
+            <span class="tm-label">CARBOHYDRATES</span>
+            <span class="pixel-number tm-val" id="totalCarbsVal">--<small>g</small></span>
+            <span class="tm-sub">4 kcal / g</span>
+          </div>
+          <div class="total-metric">
+            <span class="tm-label">FATS</span>
+            <span class="pixel-number tm-val" id="totalFatsVal">--<small>g</small></span>
+            <span class="tm-sub">9 kcal / g</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2-Column Bento: Left (Photo Analysis + Manual Entry) | Right (Diet Suggestions + Logged Meals) -->
+      <div class="meals-bento-grid">
+        
+        <!-- LEFT COLUMN: Input Options -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+          
+          <!-- 1a. Analyze Meal Photo Card -->
+          <section class="card photo-analysis-card" aria-label="Analyze Meal Photo">
+            <div class="card-header">
+              <span class="card-label">AI VISION // ESTIMATION</span>
+              <span class="badge-chip badge-estimate">Estimated</span>
+            </div>
+            <h3 class="card-heading-sm">Analyze Meal Photo</h3>
+            <p class="card-subtext">Snap or upload a photo of your meal. The image is compressed on-device to max 1024px before sending.</p>
+
+            <!-- Hidden File Input for mobile camera and desktop -->
+            <input type="file" id="photoFileInput" accept="image/*" style="display: none;">
+
+            <!-- Upload Drop Zone / Button -->
+            <div class="photo-upload-zone" id="photoDropZone" style="margin-top: var(--space-sm);">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
+              </svg>
+              <span style="font-family: var(--font-mono); font-size: 11px; margin-top: 6px; color: var(--color-text-secondary);">
+                TAP TO CAPTURE OR CHOOSE IMAGE
+              </span>
+            </div>
+
+            <!-- Image Preview Container -->
+            <div class="photo-preview-wrap" id="photoPreviewWrap" style="display: none;">
+              <img id="photoPreviewImg" class="photo-preview-img" alt="Meal preview">
+            </div>
+
+            <!-- Action Button -->
+            <div style="margin-top: var(--space-sm); display: flex; gap: var(--space-xs);">
+              <button type="button" class="btn-primary" id="analyzePhotoBtn" style="display: none; width: 100%;">
+                ANALYZE PHOTO &gt;&gt;&gt;
+              </button>
+            </div>
+
+            <!-- Analysis Loading Skeleton -->
+            <div id="photoSkeleton" style="display: none; margin-top: var(--space-sm);">
+              <div class="skeleton-card" style="height: 60px;"></div>
+              <div class="skeleton-card" style="height: 60px;"></div>
+            </div>
+
+            <!-- Error Banner -->
+            <div id="photoErrorBanner" class="alert-banner" style="display: none; margin-top: var(--space-sm);">
+              <span id="photoErrorMsg"></span>
+            </div>
+
+            <!-- Detected Items Result List -->
+            <div id="detectedItemsContainer" class="detected-items-grid" style="display: none;">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </section>
+
+          <!-- Manual Food Entry Card -->
+          <section class="card meal-form-card" aria-label="Add Meal Form">
+            <div class="card-header">
+              <span class="card-label">MANUAL ENTRY</span>
+              <h3 class="card-heading-sm">Log Food Item</h3>
+            </div>
+            <form id="addMealForm" class="bento-form">
+              <div class="form-group">
+                <label for="mealName" class="form-label">Food name *</label>
+                <input type="text" id="mealName" class="form-input" placeholder="e.g. Oatmeal with blueberries" required>
+              </div>
+              <div class="form-row-duo">
+                <div class="form-group">
+                  <label for="mealCalories" class="form-label">Calories (kcal) *</label>
+                  <input type="number" id="mealCalories" class="form-input" placeholder="Calories" required min="1" step="1">
+                </div>
+                <div class="form-group">
+                  <label for="mealPortion" class="form-label">Portion size</label>
+                  <input type="text" id="mealPortion" class="form-input" placeholder="e.g. 1 bowl, 200g">
+                </div>
+              </div>
+              <div class="form-row-triplet">
+                <div class="form-group">
+                  <label for="mealProtein" class="form-label">Protein (g)</label>
+                  <input type="number" id="mealProtein" class="form-input" placeholder="0" min="0" step="0.5">
+                </div>
+                <div class="form-group">
+                  <label for="mealCarbs" class="form-label">Carbs (g)</label>
+                  <input type="number" id="mealCarbs" class="form-input" placeholder="0" min="0" step="0.5">
+                </div>
+                <div class="form-group">
+                  <label for="mealFats" class="form-label">Fats (g)</label>
+                  <input type="number" id="mealFats" class="form-input" placeholder="0" min="0" step="0.5">
+                </div>
+              </div>
+              <button type="submit" class="btn-primary" id="saveMealBtn">+ ADD MEAL LOG &gt;&gt;&gt;</button>
+            </form>
+          </section>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Diet Suggestions & Logged Meals -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+
+          <!-- 1b. Diet Suggestions Card -->
+          <section class="card diet-suggestions-card" id="dietSuggestionsCard" aria-label="Diet Suggestions">
+            <div class="card-header">
+              <span class="card-label">RECOVERY // TARGET SHORTFALLS</span>
+              <div class="preference-pills" id="prefPillsContainer" title="Change diet preference">
+                <button type="button" class="pref-pill" data-pref="any">ANY</button>
+                <button type="button" class="pref-pill" data-pref="veg">VEG</button>
+                <button type="button" class="pref-pill" data-pref="non_veg">NON-VEG</button>
+              </div>
+            </div>
+
+            <div id="suggestionsLoading" class="skeleton-list">
+              <div class="skeleton-card" style="height: 50px;"></div>
+            </div>
+
+            <!-- Empty State 1: Nothing logged yet -->
+            <div id="sugEmptyNoMeals" class="empty-state-mini" style="display: none;">
+              <p class="empty-desc">Log a meal to get suggestions</p>
+              <p class="empty-text">Track breakfast, lunch, or a snack to unlock intelligent shortfall targets.</p>
+            </div>
+
+            <!-- Empty State 2: On track -->
+            <div id="sugEmptyOnTrack" class="empty-state-mini" style="display: none;">
+              <span class="badge-chip badge-estimate" style="font-size: 11px;">TARGETS MET</span>
+              <p class="empty-desc" style="color: var(--color-accent); margin-top: 6px;">You're on track today</p>
+              <p class="empty-text">Your consumed macronutrients are within budget of your daily goals.</p>
+            </div>
+
+            <!-- Populated Shortfalls List -->
+            <div id="shortfallsContainer" class="shortfalls-list" style="display: none;">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </section>
+
+          <!-- Today's Logged Meals Card -->
+          <section class="card today-meals-card" aria-label="Today Meals List">
+            <div class="card-header">
+              <span class="card-label">LOGGED TODAY</span>
+              <span class="mono-tag" id="mealsCountTag">--</span>
+            </div>
+
+            <div id="mealsLoading" class="skeleton-list">
+              <div class="skeleton-card"></div>
+              <div class="skeleton-card"></div>
+            </div>
+
+            <div id="mealsEmpty" class="empty-state-mini" style="display: none;">
+              <p class="empty-desc">No meals yet</p>
+              <p class="empty-text">Log your breakfast, lunch, or dinner above to monitor caloric deficit or surplus.</p>
+            </div>
+
+            <div id="mealsList" class="meals-stack" style="display: none;">
+              <!-- Populated dynamically via JS -->
+            </div>
+          </section>
+
+        </div>
+
+      </div>
+
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/scramble.js"></script>
+  <script src="js/lamp.js"></script>
+  <script>
+    let hasScrambledTotals = false;
+    let selectedImageFile = null;
+    let currentDietPreference = 'any';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!api.getToken()) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('logoutBtn').addEventListener('click', () => api.logout());
+
+      // Fetch user profile to read initial diet preference
+      try {
+        const user = await api.get('/users/me');
+        if (user && user.diet_preference) {
+          currentDietPreference = user.diet_preference;
+        }
+        updatePrefPillsUI();
+      } catch (err) {
+        console.error('Failed to load user preferences:', err);
+      }
+
+      // Preference toggle buttons
+      document.querySelectorAll('#prefPillsContainer .pref-pill').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const pref = btn.getAttribute('data-pref');
+          if (pref === currentDietPreference) return;
+          currentDietPreference = pref;
+          updatePrefPillsUI();
+          try {
+            await api.put('/users/me', { diet_preference: pref });
+            await loadDietSuggestions();
+          } catch (err) {
+            console.error('Failed to update diet preference:', err);
+          }
+        });
+      });
+
+      // Photo upload interactions
+      setupPhotoAnalysis();
+
+      // Manual Add Meal Form
+      const addMealForm = document.getElementById('addMealForm');
+      addMealForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('mealName').value.trim();
+        const calories = parseFloat(document.getElementById('mealCalories').value) || 0;
+        const portion_size = document.getElementById('mealPortion').value.trim() || '1 serving';
+        const protein_g = parseFloat(document.getElementById('mealProtein').value) || 0;
+        const carbs_g = parseFloat(document.getElementById('mealCarbs').value) || 0;
+        const fats_g = parseFloat(document.getElementById('mealFats').value) || 0;
+
+        if (!name || calories <= 0) return;
+
+        try {
+          await api.post('/nutrition/meals', {
+            name,
+            calories,
+            portion_size,
+            protein_g,
+            carbs_g,
+            fats_g
+          });
+          addMealForm.reset();
+          await refreshAllNutrition();
+        } catch (err) {
+          alert(err.message || 'Error saving meal');
+        }
+      });
+
+      // Initial load
+      await refreshAllNutrition();
+    });
+
+    function updatePrefPillsUI() {
+      document.querySelectorAll('#prefPillsContainer .pref-pill').forEach(btn => {
+        const pref = btn.getAttribute('data-pref');
+        btn.classList.toggle('is-active', pref === currentDietPreference);
+      });
+    }
+
+    async function refreshAllNutrition() {
+      await Promise.all([
+        loadNutritionData(),
+        loadDietSuggestions()
+      ]);
+    }
+
+    // --- PHOTO RESIZE & ANALYSIS (Browser Canvas resize to max 1024px) ---
+    function setupPhotoAnalysis() {
+      const dropZone = document.getElementById('photoDropZone');
+      const fileInput = document.getElementById('photoFileInput');
+      const previewWrap = document.getElementById('photoPreviewWrap');
+      const previewImg = document.getElementById('photoPreviewImg');
+      const analyzeBtn = document.getElementById('analyzePhotoBtn');
+      const errorBanner = document.getElementById('photoErrorBanner');
+      const errorMsg = document.getElementById('photoErrorMsg');
+
+      dropZone.addEventListener('click', () => fileInput.click());
+
+      fileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        errorBanner.style.display = 'none';
+
+        // Resize image on client using an in-memory Canvas to keep uploads under 1024px
+        try {
+          const resizedBlob = await resizeImageToMax(file, 1024);
+          selectedImageFile = resizedBlob;
+
+          const previewUrl = URL.createObjectURL(resizedBlob);
+          previewImg.src = previewUrl;
+          previewWrap.style.display = 'flex';
+          analyzeBtn.style.display = 'inline-flex';
+        } catch (err) {
+          errorBanner.style.display = 'flex';
+          errorMsg.textContent = 'Could not process selected image. Please try another file.';
+        }
+      });
+
+      analyzeBtn.addEventListener('click', async () => {
+        if (!selectedImageFile) return;
+
+        const skeleton = document.getElementById('photoSkeleton');
+        const container = document.getElementById('detectedItemsContainer');
+        errorBanner.style.display = 'none';
+        skeleton.style.display = 'block';
+        container.style.display = 'none';
+        analyzeBtn.disabled = true;
+
+        try {
+          const formData = new FormData();
+          formData.append('file', selectedImageFile, 'meal.jpg');
+
+          // Send multipart request to /api/v1/nutrition/analyze-photo
+          const token = api.getToken();
+          const response = await fetch(`${api.baseUrl}/nutrition/analyze-photo`, {
+            method: 'POST',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            },
+            body: formData
+          });
+
+          skeleton.style.display = 'none';
+          analyzeBtn.disabled = false;
+
+          const data = await response.json().catch(() => null);
+
+          if (!response.ok) {
+            errorBanner.style.display = 'flex';
+            errorMsg.textContent = data?.detail || 'Photo analysis failed. You can still log meals manually.';
+            return;
+          }
+
+          renderDetectedItems(data.items || []);
+        } catch (err) {
+          skeleton.style.display = 'none';
+          analyzeBtn.disabled = false;
+          errorBanner.style.display = 'flex';
+          errorMsg.textContent = err.message || 'Connection error. Please try again or log manually.';
+        }
+      });
+    }
+
+    /**
+     * Resizes an image file to max 1024px on the longest side using HTML5 Canvas.
+     */
+    function resizeImageToMax(file, maxDimension) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+
+            if (width > maxDimension || height > maxDimension) {
+              if (width > height) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              } else {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob((blob) => {
+              if (blob) resolve(blob);
+              else reject(new Error('Canvas blob generation failed'));
+            }, 'image/jpeg', 0.85);
+          };
+          img.onerror = reject;
+          img.src = e.target.result;
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderDetectedItems(items) {
+      const container = document.getElementById('detectedItemsContainer');
+      container.innerHTML = '';
+
+      if (!items || items.length === 0) {
+        container.innerHTML = '<p class="empty-desc" style="text-align: center;">No specific food items detected. Please adjust or enter manually.</p>';
+        container.style.display = 'flex';
+        return;
+      }
+
+      container.style.display = 'flex';
+
+      items.forEach((item, idx) => {
+        const card = document.createElement('div');
+        card.className = 'detected-item-card';
+
+        const confidencePct = Math.round((item.confidence || 0) * 100);
+        const needsInput = item.needs_input || item.calories === null || item.calories === undefined;
+
+        card.innerHTML = `
+          <div class="detected-item-header">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="badge-chip badge-estimate">Estimated</span>
+              <span class="badge-chip badge-confidence">${confidencePct}% confidence</span>
+              ${needsInput ? '<span class="badge-chip badge-needs-input">Needs your input</span>' : ''}
+            </div>
+            ${item.reason ? `<span style="font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted);">${escapeHtml(item.reason)}</span>` : ''}
+          </div>
+
+          <div class="form-row-duo">
+            <div class="form-group">
+              <label class="form-label">Detected Item Name</label>
+              <input type="text" class="form-input item-name ${!item.name ? 'input-needs-highlight' : ''}" value="${escapeHtml(item.name || '')}" placeholder="Food name">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Est. Weight (grams)</label>
+              <input type="number" class="form-input item-grams" value="${item.estimated_grams !== null && item.estimated_grams !== undefined ? item.estimated_grams : ''}" placeholder="e.g. 150">
+            </div>
+          </div>
+
+          <div class="form-row-triplet" style="grid-template-columns: repeat(4, 1fr);">
+            <div class="form-group">
+              <label class="form-label">Calories (kcal) *</label>
+              <input type="number" class="form-input item-calories ${needsInput && !item.calories ? 'input-needs-highlight' : ''}" value="${item.calories !== null && item.calories !== undefined ? item.calories : ''}" placeholder="kcal" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Protein (g)</label>
+              <input type="number" class="form-input item-protein ${needsInput && !item.protein_g ? 'input-needs-highlight' : ''}" value="${item.protein_g !== null && item.protein_g !== undefined ? item.protein_g : ''}" placeholder="g" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Carbs (g)</label>
+              <input type="number" class="form-input item-carbs" value="${item.carbs_g !== null && item.carbs_g !== undefined ? item.carbs_g : ''}" placeholder="g" min="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Fats (g)</label>
+              <input type="number" class="form-input item-fats" value="${item.fats_g !== null && item.fats_g !== undefined ? item.fats_g : ''}" placeholder="g" min="0">
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
+            <button type="button" class="btn-primary btn-sm add-detected-log-btn" data-index="${idx}">
+              + ADD TO LOG &gt;&gt;&gt;
+            </button>
+          </div>
+        `;
+
+        const addBtn = card.querySelector('.add-detected-log-btn');
+        addBtn.addEventListener('click', async () => {
+          const nameInput = card.querySelector('.item-name');
+          const gramsInput = card.querySelector('.item-grams');
+          const calInput = card.querySelector('.item-calories');
+          const proInput = card.querySelector('.item-protein');
+          const carbInput = card.querySelector('.item-carbs');
+          const fatInput = card.querySelector('.item-fats');
+
+          const name = nameInput.value.trim();
+          const calories = parseFloat(calInput.value) || 0;
+          const grams = parseFloat(gramsInput.value);
+          const portion = grams ? `${grams}g` : '1 serving';
+
+          if (!name || calories <= 0) {
+            alert('Please enter a valid food name and calories.');
+            calInput.focus();
+            return;
+          }
+
+          try {
+            await api.post('/nutrition/meals', {
+              name,
+              calories,
+              portion_size: portion,
+              protein_g: parseFloat(proInput.value) || 0,
+              carbs_g: parseFloat(carbInput.value) || 0,
+              fats_g: parseFloat(fatInput.value) || 0
+            });
+
+            // Mark button as saved and disable
+            addBtn.textContent = '✓ LOGGED';
+            addBtn.disabled = true;
+            addBtn.style.background = 'var(--color-bg-subtle)';
+            addBtn.style.color = 'var(--color-text-muted)';
+
+            await refreshAllNutrition();
+          } catch (err) {
+            alert(err.message || 'Error saving detected meal');
+          }
+        });
+
+        container.appendChild(card);
+      });
+    }
+
+    // --- 1b. DIET SUGGESTIONS ---
+    async function loadDietSuggestions() {
+      const loading = document.getElementById('suggestionsLoading');
+      const emptyNoMeals = document.getElementById('sugEmptyNoMeals');
+      const emptyOnTrack = document.getElementById('sugEmptyOnTrack');
+      const container = document.getElementById('shortfallsContainer');
+
+      loading.style.display = 'block';
+      emptyNoMeals.style.display = 'none';
+      emptyOnTrack.style.display = 'none';
+      container.style.display = 'none';
+
+      try {
+        const data = await api.get('/nutrition/suggestions');
+        loading.style.display = 'none';
+
+        if (!data) return;
+
+        // Empty state: No meals yet
+        if (data.message === 'Log a meal to get suggestions') {
+          emptyNoMeals.style.display = 'block';
+          return;
+        }
+
+        // Empty state: On track
+        if (!data.has_shortfall || (data.shortfalls && data.shortfalls.length === 0)) {
+          emptyOnTrack.style.display = 'block';
+          return;
+        }
+
+        // Render shortfalls
+        container.innerHTML = '';
+        container.style.display = 'flex';
+
+        data.shortfalls.forEach((sf) => {
+          const card = document.createElement('div');
+          card.className = 'shortfall-card';
+
+          let suggestionsHtml = '';
+          if (sf.suggestions && sf.suggestions.length > 0) {
+            suggestionsHtml = `
+              <div class="suggestions-grid">
+                ${sf.suggestions.map(s => `
+                  <div class="suggestion-pill">
+                    <span class="sug-food">${escapeHtml(s.food_name)}</span>
+                    <span class="sug-detail">${escapeHtml(s.serving)} • +${escapeHtml(s.nutrient_amount)}</span>
+                  </div>
+                `).join('')}
+              </div>
+            `;
+          } else {
+            suggestionsHtml = `
+              <p style="font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); margin-top: 6px;">
+                About ${sf.shortfall_amount} ${sf.unit} more ${sf.nutrient.toLowerCase()} needed to reach target.
+              </p>
+            `;
+          }
+
+          card.innerHTML = `
+            <div class="shortfall-header">
+              <span class="shortfall-name">${escapeHtml(sf.nutrient)} Shortfall</span>
+              <span class="shortfall-stat">${sf.shortfall_amount} ${sf.unit} deficit (${sf.consumed} / ${sf.target} ${sf.unit})</span>
+            </div>
+            ${suggestionsHtml}
+          `;
+
+          container.appendChild(card);
+        });
+
+      } catch (err) {
+        console.error('Failed to load diet suggestions:', err);
+        loading.style.display = 'none';
+      }
+    }
+
+    // --- DAILY NUTRITION TOTALS & MEALS LIST ---
+    async function loadNutritionData() {
+      const loading = document.getElementById('mealsLoading');
+      const empty = document.getElementById('mealsEmpty');
+      const list = document.getElementById('mealsList');
+
+      loading.style.display = 'grid';
+      empty.style.display = 'none';
+      list.style.display = 'none';
+
+      try {
+        const [todayTotals, meals] = await Promise.all([
+          api.get('/nutrition/today'),
+          api.get(`/nutrition/meals?date_filter=${new Date().toISOString().split('T')[0]}`)
+        ]);
+
+        // Render Totals
+        const cals = Math.round(todayTotals.total_calories);
+        if (!hasScrambledTotals) {
+          hasScrambledTotals = true;
+          scrambleNumber('totalCalsVal', cals.toLocaleString(), 700);
+          scrambleNumber('totalProteinVal', Math.round(todayTotals.total_protein), 700, '<small>g</small>');
+          scrambleNumber('totalCarbsVal', Math.round(todayTotals.total_carbs), 700, '<small>g</small>');
+          scrambleNumber('totalFatsVal', Math.round(todayTotals.total_fats), 700, '<small>g</small>');
+        } else {
+          document.getElementById('totalCalsVal').textContent = cals.toLocaleString();
+          document.getElementById('totalProteinVal').innerHTML = `${Math.round(todayTotals.total_protein)}<small>g</small>`;
+          document.getElementById('totalCarbsVal').innerHTML = `${Math.round(todayTotals.total_carbs)}<small>g</small>`;
+          document.getElementById('totalFatsVal').innerHTML = `${Math.round(todayTotals.total_fats)}<small>g</small>`;
+        }
+        document.getElementById('targetCalsSub').textContent = `Target: ${todayTotals.target_calories.toLocaleString()} kcal`;
+
+        const pct = todayTotals.target_calories > 0
+          ? Math.min(100, Math.round((todayTotals.total_calories / todayTotals.target_calories) * 100))
+          : 0;
+        document.getElementById('dailyGoalPct').textContent = `${pct}% OF TARGET`;
+
+        // Render Meals List
+        loading.style.display = 'none';
+        document.getElementById('mealsCountTag').textContent = `${meals.length} ITEMS`;
+
+        if (!meals || meals.length === 0) {
+          empty.style.display = 'block';
+          return;
+        }
+
+        list.innerHTML = '';
+        list.style.display = 'flex';
+
+        meals.forEach((m) => {
+          const item = document.createElement('div');
+          item.className = 'meal-entry-row';
+          item.id = `meal-${m.id}`;
+
+          item.innerHTML = `
+            <div class="meal-info">
+              <span class="meal-name">${escapeHtml(m.name)}</span>
+              <span class="meal-portion">${escapeHtml(m.portion_size || '1 serving')} • P: ${m.protein_g}g | C: ${m.carbs_g}g | F: ${m.fats_g}g</span>
+            </div>
+            <div class="meal-right">
+              <span class="meal-cals">${Math.round(m.calories)} <small>kcal</small></span>
+              <button type="button" class="btn-icon-del delete-meal-btn" data-id="${m.id}" title="Delete meal" aria-label="Delete meal">&times;</button>
+            </div>
+          `;
+
+          list.appendChild(item);
+        });
+
+        list.querySelectorAll('.delete-meal-btn').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            const id = btn.getAttribute('data-id');
+            if (confirm('Delete this meal entry?')) {
+              try {
+                await api.delete(`/nutrition/meals/${id}`);
+                await refreshAllNutrition();
+              } catch (err) {
+                alert(err.message || 'Error deleting meal');
+              }
+            }
+          });
+        });
+
+      } catch (err) {
+        console.error('Failed to load nutrition data:', err);
+        loading.style.display = 'none';
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

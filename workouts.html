@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseAI — Workouts & Training</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="app-body">
+
+  <div class="app-shell">
+    <!-- Responsive Navigation -->
+    <nav class="app-nav" aria-label="Main Navigation">
+      <div class="nav-brand">
+        <div class="brand-logo-symbol">
+          <svg width="24" height="15" viewBox="0 0 22 14" fill="currentColor">
+            <path d="M0 2h6v2H0zm8 0h6v2H8zm8 0h6v2h-6zM3 6h6v2H3zm8 0h6v2h-6zm8 0h3v2h-3zM6 10h6v2H6zm8 0h6v2h-6z"/>
+          </svg>
+        </div>
+        <span class="brand-wordmark">PulseAI</span>
+      </div>
+
+      <ul class="nav-links">
+        <li>
+          <a href="dashboard.html" class="nav-item" aria-label="Dashboard">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            <span class="nav-label">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="meals.html" class="nav-item" aria-label="Meals">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+              <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+              <line x1="6" y1="1" x2="6" y2="4"/>
+              <line x1="10" y1="1" x2="10" y2="4"/>
+              <line x1="14" y1="1" x2="14" y2="4"/>
+            </svg>
+            <span class="nav-label">Meals</span>
+          </a>
+        </li>
+        <li>
+          <a href="workouts.html" class="nav-item active" aria-label="Workouts" aria-current="page">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m6.5 6.5 11 11"/>
+              <path d="m21 21-1-1"/>
+              <path d="m3 3 1 1"/>
+              <path d="m18 22 4-4"/>
+              <path d="m2 6 4-4"/>
+              <path d="m3 10 7-7"/>
+              <path d="m14 21 7-7"/>
+            </svg>
+            <span class="nav-label">Workouts</span>
+          </a>
+        </li>
+        <li>
+          <a href="settings.html" class="nav-item" aria-label="Settings">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/>
+              <circle cx="12" cy="12" r="3"/>
+            </svg>
+            <span class="nav-label">Settings</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="nav-footer">
+        <button type="button" class="btn-logout-icon" id="logoutBtn" title="Log out" aria-label="Log out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+          <span class="logout-label">Logout</span>
+        </button>
+      </div>
+    </nav>
+
+    <main class="main-content">
+      <header class="content-header">
+        <div>
+          <span class="header-kicker">TRAINING LOGS // SESSIONS</span>
+          <h1 class="header-title">Workouts</h1>
+        </div>
+        <button type="button" class="btn-primary" id="openAddWorkoutModalBtn">+ LOG SESSION &gt;&gt;&gt;</button>
+      </header>
+
+      <!-- Category Filter Tabs: All + 5 Specific Categories -->
+      <nav class="category-tabs-nav" id="categoryTabsNav" aria-label="Workout Categories">
+        <button type="button" class="cat-tab-btn is-active" data-cat="all">ALL <span class="cat-badge-count" id="count-all">0</span></button>
+        <button type="button" class="cat-tab-btn" data-cat="gym">GYM <span class="cat-badge-count" id="count-gym">0</span></button>
+        <button type="button" class="cat-tab-btn" data-cat="bodyweight">BODYWEIGHT <span class="cat-badge-count" id="count-bodyweight">0</span></button>
+        <button type="button" class="cat-tab-btn" data-cat="speed">SPEED <span class="cat-badge-count" id="count-speed">0</span></button>
+        <button type="button" class="cat-tab-btn" data-cat="endurance">ENDURANCE <span class="cat-badge-count" id="count-endurance">0</span></button>
+        <button type="button" class="cat-tab-btn" data-cat="rehab">REHAB <span class="cat-badge-count" id="count-rehab">0</span></button>
+      </nav>
+
+      <!-- AI Workout Generator Card -->
+      <section class="card generator-card" id="generatorCard" aria-label="AI Workout Generator">
+        <div class="card-header">
+          <span class="card-label">COACH AI // TAILORED SESSION</span>
+          <span class="badge-chip badge-estimate" id="genCategoryBadge">GYM</span>
+        </div>
+        <h3 class="card-heading-sm" id="genCardTitle">Generate Personalised Workout</h3>
+        <p class="card-subtext" id="genCardDesc">Constructs a targeted session adapted to your recent history and biometrics.</p>
+
+        <!-- Category-Specific Generator Inputs -->
+        <form id="generateWorkoutForm" class="bento-form" style="margin-top: var(--space-sm);">
+
+          <!-- Fields for Bodyweight -->
+          <div class="generator-form-grid cat-fields" id="fields-bodyweight" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Fitness Level</label>
+              <select class="form-input" id="bwLevel">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time Available (min)</label>
+              <input type="number" class="form-input" id="bwTime" value="30" min="10" max="120">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Focus Area</label>
+              <select class="form-input" id="bwFocus">
+                <option value="full body">Full Body</option>
+                <option value="upper body">Upper Body</option>
+                <option value="lower body">Lower Body</option>
+                <option value="core">Core</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Fields for Gym (Default) -->
+          <div class="generator-form-grid cat-fields" id="fields-gym">
+            <div class="form-group">
+              <label class="form-label">Fitness Level</label>
+              <select class="form-input" id="gymLevel">
+                <option value="beginner">Beginner</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="advanced">Advanced</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Time Available (min)</label>
+              <input type="number" class="form-input" id="gymTime" value="45" min="15" max="120">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Muscle Focus</label>
+              <select class="form-input" id="gymFocus">
+                <option value="Push (Chest/Shoulders/Triceps)">Push (Chest/Shoulders/Triceps)</option>
+                <option value="Pull (Back/Biceps)">Pull (Back/Biceps)</option>
+                <option value="Legs (Quads/Hamstrings/Calves)">Legs</option>
+                <option value="Upper Body Hypertrophy">Upper Body Hypertrophy</option>
+                <option value="Full Body Compound">Full Body Compound</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Equipment</label>
+              <select class="form-input" id="gymEquipment">
+                <option value="full gym">Full Gym (Barbell, Dumbbells, Cables)</option>
+                <option value="dumbbells only">Dumbbells Only</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Fields for Speed -->
+          <div class="generator-form-grid cat-fields" id="fields-speed" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Speed Focus</label>
+              <select class="form-input" id="speedFocus">
+                <option value="sprint mechanics">Sprint Mechanics & Acceleration</option>
+                <option value="agility and change of direction">Agility & Footwork</option>
+                <option value="top end speed">Top-End Max Velocity</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Athletic Level</label>
+              <select class="form-input" id="speedLevel">
+                <option value="beginner">Developmental</option>
+                <option value="intermediate" selected>Intermediate</option>
+                <option value="advanced">Competitive Athlete</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Session Duration (min)</label>
+              <input type="number" class="form-input" id="speedTime" value="35" min="15" max="90">
+            </div>
+          </div>
+
+          <!-- Fields for Endurance -->
+          <div class="generator-form-grid cat-fields" id="fields-endurance" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Activity</label>
+              <select class="form-input" id="enduranceActivity">
+                <option value="run">Road / Trail Running</option>
+                <option value="cycle">Cycling</option>
+                <option value="swim">Swimming</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Intensity Level</label>
+              <select class="form-input" id="enduranceLevel">
+                <option value="Zone 2 Aerobic Base">Zone 2 Aerobic Base</option>
+                <option value="Tempo Threshold" selected>Tempo Threshold</option>
+                <option value="HIIT Intervals">HIIT Intervals</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Duration (min)</label>
+              <input type="number" class="form-input" id="enduranceTime" value="45" min="15" max="180">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Target Distance (km, optional)</label>
+              <input type="number" class="form-input" id="enduranceDist" placeholder="Optional km" step="0.5" min="1">
+            </div>
+          </div>
+
+          <!-- Fields for Rehab (With Mandatory Safety Rules) -->
+          <div class="generator-form-grid cat-fields" id="fields-rehab" style="display: none;">
+            <div class="form-group">
+              <label class="form-label">Target Body Area</label>
+              <select class="form-input" id="rehabArea">
+                <option value="knee">Knee (Patellar / IT Band)</option>
+                <option value="shoulder">Shoulder (Rotator Cuff)</option>
+                <option value="lower back">Lower Back (Lumbar Mobility)</option>
+                <option value="ankle and achilles">Ankle &amp; Achilles</option>
+                <option value="hip flexors">Hip Flexors &amp; Glutes</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Pain Level (0 to 10)</label>
+              <input type="number" class="form-input" id="rehabPain" value="2" min="0" max="10">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Rehabilitation Stage</label>
+              <select class="form-input" id="rehabStage">
+                <option value="early" selected>Early (Gentle range of motion)</option>
+                <option value="mid">Mid (Isometric strengthening)</option>
+                <option value="late">Late (Functional return to sport)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+            <span class="rehab-guidance-pill">General guidance only, not medical advice.</span>
+            <button type="submit" class="btn-primary" id="generateBtn">
+              GENERATE WORKOUT &gt;&gt;&gt;
+            </button>
+          </div>
+        </form>
+
+        <!-- Generation Loading Skeleton -->
+        <div id="genSkeleton" style="display: none; margin-top: var(--space-md);">
+          <div class="skeleton-card" style="height: 50px;"></div>
+          <div class="skeleton-card" style="height: 50px;"></div>
+        </div>
+
+        <!-- Generated Result Preview -->
+        <div id="genResultCard" style="display: none; margin-top: var(--space-md); border-top: 1px solid var(--color-border); padding-top: var(--space-md);">
+          
+          <!-- Rehab Medical Warning Banner if pain >= 7 -->
+          <div id="rehabSevereAlert" class="rehab-disclaimer-box" style="display: none;">
+            <strong>Medical Notice:</strong>
+            <span id="rehabSevereMsg"></span>
+          </div>
+
+          <div id="genWorkoutDetails">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px;">
+              <h3 class="workout-name" id="genWorkoutTitle" style="margin: 0;">--</h3>
+              <span class="mono-tag" id="genDurationTag">-- MIN</span>
+            </div>
+
+            <!-- Exercise List Preview -->
+            <div class="exercise-preview-list" id="genExerciseList">
+              <!-- Rendered via JS -->
+            </div>
+
+            <div style="display: flex; justify-content: flex-end; gap: var(--space-xs); margin-top: var(--space-sm);">
+              <button type="button" class="btn-subtle" id="regenerateBtn">Regenerate</button>
+              <button type="button" class="btn-primary" id="logGeneratedBtn">+ LOG THIS WORKOUT &gt;&gt;&gt;</button>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- Add Workout Form Card (Collapsible for Manual Logging) -->
+      <section class="card add-form-card" id="addWorkoutSection" style="display: none; margin-bottom: var(--space-lg);">
+        <div class="card-header">
+          <span class="card-label">NEW TRAINING LOG</span>
+          <button type="button" class="btn-icon-close" id="closeAddWorkoutBtn" aria-label="Close form">&times;</button>
+        </div>
+        <form id="addWorkoutForm" class="bento-form">
+          <div class="form-row-duo">
+            <div class="form-group">
+              <label for="wName" class="form-label">Workout name *</label>
+              <input type="text" id="wName" class="form-input" placeholder="Workout name" required>
+            </div>
+            <div class="form-group">
+              <label for="wCategory" class="form-label">Category</label>
+              <select id="wCategory" class="form-input">
+                <option value="gym" selected>Gym</option>
+                <option value="bodyweight">Bodyweight</option>
+                <option value="speed">Speed</option>
+                <option value="endurance">Endurance</option>
+                <option value="rehab">Rehab</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row-duo">
+            <div class="form-group">
+              <label for="wDate" class="form-label">Date</label>
+              <input type="date" id="wDate" class="form-input">
+            </div>
+            <div class="form-group">
+              <label for="wDuration" class="form-label">Duration (min)</label>
+              <input type="number" id="wDuration" class="form-input" placeholder="Minutes" min="0">
+            </div>
+          </div>
+          <div class="form-row-duo">
+            <div class="form-group" id="wVolumeGroup">
+              <label for="wVolume" class="form-label">Volume (kg, optional for endurance/speed/rehab)</label>
+              <input type="number" id="wVolume" class="form-input" placeholder="Volume in kg" min="0" step="10">
+            </div>
+            <div class="form-group">
+              <label for="wAvgHr" class="form-label">Avg HR (bpm)</label>
+              <input type="number" id="wAvgHr" class="form-input" placeholder="Avg BPM" min="40" max="220">
+            </div>
+          </div>
+          <div class="form-actions-row">
+            <label class="checkbox-label">
+              <input type="checkbox" id="wCompleted" checked>
+              <span>Mark as completed</span>
+            </label>
+            <button type="submit" class="btn-primary" id="saveWorkoutBtn">SAVE WORKOUT &gt;&gt;&gt;</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Workouts List Container -->
+      <section class="workouts-list-section" aria-label="Workouts List">
+        <div id="workoutsLoading" class="skeleton-list">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+
+        <div id="workoutsEmpty" class="card empty-state-card" style="display: none;">
+          <div class="empty-icon-wrap" aria-hidden="true">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path d="m6.5 6.5 11 11M21 21l-1-1M3 3l1 1M18 22l4-4M2 6l4-4M3 10l7-7M14 21l7-7"/>
+            </svg>
+          </div>
+          <h3 class="empty-title" id="emptyTitle">No workouts yet</h3>
+          <p class="empty-text" id="emptyText">Complete training sessions to build your PulseScore index.</p>
+          <button type="button" class="btn-primary btn-sm" id="emptyAddBtn">+ LOG FIRST WORKOUT &gt;&gt;&gt;</button>
+        </div>
+
+        <div id="workoutsList" class="workouts-grid" style="display: none;">
+          <!-- Dynamically populated via JS -->
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/lamp.js"></script>
+  <script>
+    let currentCategoryFilter = 'all';
+    let allWorkoutsData = [];
+    let latestGeneratedWorkout = null;
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      if (!api.getToken()) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('logoutBtn').addEventListener('click', () => api.logout());
+
+      // Category tab switcher
+      setupCategoryTabs();
+
+      // AI Generator form
+      setupWorkoutGenerator();
+
+      // Manual workout logging setup
+      setupManualLogging();
+
+      // Initial load
+      await loadWorkouts();
+    });
+
+    function setupCategoryTabs() {
+      const tabs = document.querySelectorAll('#categoryTabsNav .cat-tab-btn');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('is-active'));
+          tab.classList.add('is-active');
+
+          const cat = tab.getAttribute('data-cat');
+          currentCategoryFilter = cat;
+
+          // Sync generator form inputs to selected category
+          const targetCat = cat === 'all' ? 'gym' : cat;
+          switchGeneratorCategory(targetCat);
+
+          // Re-render filtered list
+          renderWorkoutsList();
+        });
+      });
+    }
+
+    function switchGeneratorCategory(cat) {
+      document.querySelectorAll('.cat-fields').forEach(el => el.style.display = 'none');
+      const targetFields = document.getElementById(`fields-${cat}`);
+      if (targetFields) targetFields.style.display = 'grid';
+
+      document.getElementById('genCategoryBadge').textContent = cat.toUpperCase();
+      document.getElementById('wCategory').value = cat;
+    }
+
+    function setupWorkoutGenerator() {
+      const form = document.getElementById('generateWorkoutForm');
+      const genBtn = document.getElementById('generateBtn');
+      const regenBtn = document.getElementById('regenerateBtn');
+      const logGenBtn = document.getElementById('logGeneratedBtn');
+      const skeleton = document.getElementById('genSkeleton');
+      const resultCard = document.getElementById('genResultCard');
+
+      async function triggerGeneration() {
+        const cat = currentCategoryFilter === 'all' ? 'gym' : currentCategoryFilter;
+        let payload = { category: cat };
+
+        if (cat === 'bodyweight') {
+          payload.level = document.getElementById('bwLevel').value;
+          payload.time_available_min = parseInt(document.getElementById('bwTime').value, 10) || 30;
+          payload.focus = document.getElementById('bwFocus').value;
+        } else if (cat === 'gym') {
+          payload.level = document.getElementById('gymLevel').value;
+          payload.time_available_min = parseInt(document.getElementById('gymTime').value, 10) || 45;
+          payload.focus = document.getElementById('gymFocus').value;
+          payload.equipment = document.getElementById('gymEquipment').value;
+        } else if (cat === 'speed') {
+          payload.focus = document.getElementById('speedFocus').value;
+          payload.level = document.getElementById('speedLevel').value;
+          payload.time_available_min = parseInt(document.getElementById('speedTime').value, 10) || 35;
+        } else if (cat === 'endurance') {
+          payload.activity = document.getElementById('enduranceActivity').value;
+          payload.level = document.getElementById('enduranceLevel').value;
+          payload.time_available_min = parseInt(document.getElementById('enduranceTime').value, 10) || 45;
+          const dist = parseFloat(document.getElementById('enduranceDist').value);
+          if (dist) payload.target_distance_km = dist;
+        } else if (cat === 'rehab') {
+          payload.body_area = document.getElementById('rehabArea').value;
+          payload.pain_level = parseInt(document.getElementById('rehabPain').value, 10) || 0;
+          payload.stage = document.getElementById('rehabStage').value;
+        }
+
+        skeleton.style.display = 'block';
+        resultCard.style.display = 'none';
+        genBtn.disabled = true;
+
+        try {
+          const generated = await api.post('/workouts/generate', payload);
+          latestGeneratedWorkout = generated;
+          skeleton.style.display = 'none';
+          genBtn.disabled = false;
+          renderGeneratedResult(generated);
+        } catch (err) {
+          skeleton.style.display = 'none';
+          genBtn.disabled = false;
+          alert(err.message || 'Error generating workout. Ensure GROQ_API_KEY is configured.');
+        }
+      }
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        triggerGeneration();
+      });
+
+      regenBtn.addEventListener('click', triggerGeneration);
+
+      // Log generated workout directly to database
+      logGenBtn.addEventListener('click', async () => {
+        if (!latestGeneratedWorkout) return;
+        try {
+          await api.post('/workouts/', {
+            name: latestGeneratedWorkout.name,
+            category: latestGeneratedWorkout.category,
+            duration_min: latestGeneratedWorkout.estimated_duration_min || 30,
+            volume_kg: 0,
+            is_completed: true,
+            exercises: latestGeneratedWorkout.exercises,
+            workout_date: new Date().toISOString().split('T')[0]
+          });
+
+          logGenBtn.textContent = '✓ LOGGED TO SESSIONS';
+          logGenBtn.disabled = true;
+
+          await loadWorkouts();
+        } catch (err) {
+          alert(err.message || 'Error saving generated workout');
+        }
+      });
+    }
+
+    function renderGeneratedResult(data) {
+      const resultCard = document.getElementById('genResultCard');
+      const detailsBlock = document.getElementById('genWorkoutDetails');
+      const severeBox = document.getElementById('rehabSevereAlert');
+      const severeMsg = document.getElementById('rehabSevereMsg');
+
+      resultCard.style.display = 'block';
+
+      // If Rehab pain is 7+ -> Severe medical warning
+      if (data.rehab_warning) {
+        severeBox.style.display = 'block';
+        severeMsg.textContent = data.rehab_warning;
+        detailsBlock.style.display = 'none';
+        return;
+      }
+
+      severeBox.style.display = 'none';
+      detailsBlock.style.display = 'block';
+
+      document.getElementById('genWorkoutTitle').textContent = data.name;
+      document.getElementById('genDurationTag').textContent = `${data.estimated_duration_min} MIN ESTIMATED`;
+
+      const list = document.getElementById('genExerciseList');
+      list.innerHTML = '';
+
+      (data.exercises || []).forEach(ex => {
+        const item = document.createElement('div');
+        item.className = 'exercise-preview-item';
+
+        const setsReps = ex.sets && ex.reps ? `${ex.sets} sets × ${ex.reps}` : (ex.duration_sec ? `${ex.duration_sec}s hold/duration` : 'Bodyweight');
+        const rest = ex.rest_sec ? `Rest ${ex.rest_sec}s` : '';
+
+        item.innerHTML = `
+          <div>
+            <div class="ex-title">${escapeHtml(ex.name)}</div>
+            <div class="ex-meta">${setsReps} ${rest ? '• ' + rest : ''} ${ex.notes ? '• ' + escapeHtml(ex.notes) : ''}</div>
+          </div>
+          <span class="ex-badge">${ex.sets ? ex.sets + ' SETS' : 'DRILL'}</span>
+        `;
+        list.appendChild(item);
+      });
+
+      const logBtn = document.getElementById('logGeneratedBtn');
+      logBtn.textContent = '+ LOG THIS WORKOUT >>>';
+      logBtn.disabled = false;
+    }
+
+    function setupManualLogging() {
+      const addSection = document.getElementById('addWorkoutSection');
+      const openBtn = document.getElementById('openAddWorkoutModalBtn');
+      const emptyAddBtn = document.getElementById('emptyAddBtn');
+      const closeBtn = document.getElementById('closeAddWorkoutBtn');
+      const addForm = document.getElementById('addWorkoutForm');
+      const dateInput = document.getElementById('wDate');
+
+      dateInput.value = new Date().toISOString().split('T')[0];
+
+      function toggleAdd(show) {
+        addSection.style.display = show ? 'block' : 'none';
+        if (show) document.getElementById('wName').focus();
+      }
+
+      openBtn.addEventListener('click', () => toggleAdd(true));
+      emptyAddBtn.addEventListener('click', () => toggleAdd(true));
+      closeBtn.addEventListener('click', () => toggleAdd(false));
+
+      addForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = document.getElementById('wName').value.trim();
+        const category = document.getElementById('wCategory').value || 'gym';
+        const duration_min = parseInt(document.getElementById('wDuration').value, 10) || 0;
+        const volume_kg_raw = document.getElementById('wVolume').value;
+        const volume_kg = volume_kg_raw !== '' ? parseFloat(volume_kg_raw) : null;
+        const avg_hr_val = document.getElementById('wAvgHr').value;
+        const avg_hr = avg_hr_val ? parseInt(avg_hr_val, 10) : null;
+        const is_completed = document.getElementById('wCompleted').checked;
+        const workout_date = dateInput.value || null;
+
+        if (!name) return;
+
+        try {
+          await api.post('/workouts/', {
+            name,
+            category,
+            duration_min,
+            volume_kg,
+            avg_hr,
+            is_completed,
+            workout_date
+          });
+          addForm.reset();
+          dateInput.value = new Date().toISOString().split('T')[0];
+          document.getElementById('wCompleted').checked = true;
+          toggleAdd(false);
+          await loadWorkouts();
+        } catch (err) {
+          alert(err.message || 'Error saving workout');
+        }
+      });
+    }
+
+    async function loadWorkouts() {
+      const loading = document.getElementById('workoutsLoading');
+      const empty = document.getElementById('workoutsEmpty');
+      const list = document.getElementById('workoutsList');
+
+      loading.style.display = 'grid';
+      empty.style.display = 'none';
+      list.style.display = 'none';
+
+      try {
+        allWorkoutsData = await api.get('/workouts/');
+        loading.style.display = 'none';
+
+        // Update category badge counts
+        updateCategoryCounts();
+
+        // Render filtered list
+        renderWorkoutsList();
+      } catch (err) {
+        console.error('Failed to load workouts:', err);
+        loading.style.display = 'none';
+      }
+    }
+
+    function updateCategoryCounts() {
+      const counts = { all: allWorkoutsData.length, gym: 0, bodyweight: 0, speed: 0, endurance: 0, rehab: 0 };
+      allWorkoutsData.forEach(w => {
+        const cat = (w.category || 'gym').toLowerCase();
+        if (counts[cat] !== undefined) counts[cat]++;
+      });
+
+      Object.keys(counts).forEach(k => {
+        const el = document.getElementById(`count-${k}`);
+        if (el) el.textContent = counts[k];
+      });
+    }
+
+    function renderWorkoutsList() {
+      const empty = document.getElementById('workoutsEmpty');
+      const list = document.getElementById('workoutsList');
+
+      const filtered = currentCategoryFilter === 'all'
+        ? allWorkoutsData
+        : allWorkoutsData.filter(w => (w.category || 'gym').toLowerCase() === currentCategoryFilter);
+
+      if (filtered.length === 0) {
+        list.style.display = 'none';
+        empty.style.display = 'block';
+        if (currentCategoryFilter === 'all') {
+          document.getElementById('emptyTitle').textContent = 'No workouts yet';
+          document.getElementById('emptyText').textContent = 'Complete 5 training sessions per week to maximize your PulseScore.';
+        } else {
+          document.getElementById('emptyTitle').textContent = `No ${currentCategoryFilter} workouts yet`;
+          document.getElementById('emptyText').textContent = `Generate a personalized ${currentCategoryFilter} session above or log one manually.`;
+        }
+        return;
+      }
+
+      empty.style.display = 'none';
+      list.innerHTML = '';
+      list.style.display = 'grid';
+
+      filtered.forEach((w) => {
+        const card = document.createElement('article');
+        card.className = `card workout-item-card ${w.is_completed ? 'is-completed' : ''}`;
+        card.id = `workout-${w.id}`;
+
+        const categoryTag = (w.category || 'gym').toUpperCase();
+        const hasExercises = Array.isArray(w.exercises) && w.exercises.length > 0;
+
+        card.innerHTML = `
+          <div class="workout-card-top">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px;">
+                <span class="workout-card-date">${w.workout_date}</span>
+                <span class="badge-chip badge-confidence">${categoryTag}</span>
+              </div>
+              <h3 class="workout-card-name">${escapeHtml(w.name)}</h3>
+            </div>
+            <span class="status-pill ${w.is_completed ? 'status-completed' : ''}">
+              ${w.is_completed ? 'COMPLETED' : 'INCOMPLETE'}
+            </span>
+          </div>
+
+          <div class="stat-chips-grid">
+            <div class="stat-chip">
+              <span class="stat-chip-lbl">DURATION</span>
+              <span class="stat-chip-val">${w.duration_min}<small>m</small></span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip-lbl">VOLUME</span>
+              <span class="stat-chip-val">${w.volume_kg !== null && w.volume_kg !== undefined ? w.volume_kg.toLocaleString() + '<small>kg</small>' : '--'}</span>
+            </div>
+            <div class="stat-chip">
+              <span class="stat-chip-lbl">AVG HR</span>
+              <span class="stat-chip-val">${w.avg_hr ? w.avg_hr + '<small>bpm</small>' : '--'}</span>
+            </div>
+          </div>
+
+          ${hasExercises ? `
+            <div style="background: var(--color-bg-subtle); padding: 8px 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-border-subtle);">
+              <span style="font-family: var(--font-mono); font-size: 10px; color: var(--color-text-muted); text-transform: uppercase;">EXERCISES:</span>
+              <p style="font-family: var(--font-sans); font-size: 12px; color: var(--color-text-secondary); margin-top: 2px;">
+                ${w.exercises.map(e => escapeHtml(e.name || '')).filter(Boolean).join(' • ')}
+              </p>
+            </div>
+          ` : ''}
+
+          <div class="workout-card-actions">
+            <button type="button" class="btn-sm btn-subtle toggle-complete-btn" data-id="${w.id}">
+              ${w.is_completed ? 'Mark Incomplete' : '✓ Mark Complete'}
+            </button>
+            <button type="button" class="btn-sm btn-delete delete-workout-btn" data-id="${w.id}" aria-label="Delete workout">
+              Delete
+            </button>
+          </div>
+        `;
+
+        list.appendChild(card);
+      });
+
+      list.querySelectorAll('.toggle-complete-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-id');
+          try {
+            await api.patch(`/workouts/${id}/complete`);
+            await loadWorkouts();
+          } catch (err) {
+            alert(err.message || 'Error updating workout');
+          }
+        });
+      });
+
+      list.querySelectorAll('.delete-workout-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-id');
+          if (confirm('Delete this workout log?')) {
+            try {
+              await api.delete(`/workouts/${id}`);
+              await loadWorkouts();
+            } catch (err) {
+              alert(err.message || 'Error deleting workout');
+            }
+          }
+        });
+      });
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+  </script>
+</body>
+</html>

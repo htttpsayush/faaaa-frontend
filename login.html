@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseAI — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="auth-page">
+
+  <!-- Interactive Aurora Ambient Layer -->
+  <div class="aurora-container" aria-hidden="true">
+    <div class="aurora-mesh"></div>
+    <div class="cursor-glow"></div>
+  </div>
+
+  <div class="auth-split-wrapper">
+    <!-- Left Hero Brand Column (Desktop) -->
+    <section class="auth-brand-side">
+      <div class="brand-top">
+        <div class="brand-logo-symbol">
+          <svg width="28" height="18" viewBox="0 0 22 14" fill="currentColor">
+            <path d="M0 2h6v2H0zm8 0h6v2H8zm8 0h6v2h-6zM3 6h6v2H3zm8 0h6v2h-6zm8 0h3v2h-3zM6 10h6v2H6zm8 0h6v2h-6z"/>
+          </svg>
+        </div>
+        <span class="brand-wordmark">PulseAI</span>
+      </div>
+
+      <div class="brand-hero-content">
+        <span class="brand-sub-badge">PERFORMANCE ENGINE</span>
+        <h1 class="brand-pixel-title">ELEVATE YOUR ATHLETIC PULSE.</h1>
+        <p class="brand-desc">Precision biometrics, adaptive recovery tracking, and streamlined caloric analytics designed to move with purpose.</p>
+      </div>
+
+      <div class="brand-bottom-coords">
+        <span class="mono-coords">ATHLETE METRICS</span>
+        <span class="mono-tag">PULSEAI OS</span>
+      </div>
+    </section>
+
+    <!-- Right Form Side -->
+    <section class="auth-form-side">
+      <div class="glass-form-card">
+        <div class="form-header">
+          <span class="form-kicker">WELCOME BACK</span>
+          <h2 class="form-title">SIGN INTO DASHBOARD</h2>
+          <p class="form-desc">Enter your credentials to access your live training and recovery metrics.</p>
+        </div>
+
+        <!-- Backend Error Banner -->
+        <div id="authAlert" class="alert-banner" role="alert" style="display: none;">
+          <span id="alertMessage"></span>
+        </div>
+
+        <form id="loginForm" class="auth-form" novalidate>
+          <div class="form-group">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" id="email" class="form-input" placeholder="name@example.com" required autocomplete="email">
+            <span class="field-error" id="emailError"></span>
+          </div>
+
+          <div class="form-group">
+            <div class="label-row">
+              <label for="password" class="form-label">Password</label>
+            </div>
+            <input type="password" id="password" class="form-input" placeholder="Password" required autocomplete="current-password">
+            <span class="field-error" id="passwordError"></span>
+          </div>
+
+          <button type="submit" id="submitBtn" class="btn-primary">
+            <span class="btn-text">SIGN IN &gt;&gt;&gt;</span>
+            <span class="btn-loader" style="display: none;"></span>
+          </button>
+        </form>
+
+        <div class="form-footer">
+          <span class="footer-text">New to PulseAI?</span>
+          <a href="signup.html" class="footer-link">Create an account</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/lamp.js"></script>
+  <script src="js/aurora.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // If already logged in, redirect to dashboard
+      if (api.getToken()) {
+        window.location.href = 'dashboard.html';
+        return;
+      }
+
+      const form = document.getElementById('loginForm');
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const emailError = document.getElementById('emailError');
+      const passwordError = document.getElementById('passwordError');
+      const alertBox = document.getElementById('authAlert');
+      const alertMsg = document.getElementById('alertMessage');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = submitBtn.querySelector('.btn-text');
+      const btnLoader = submitBtn.querySelector('.btn-loader');
+
+      function clearErrors() {
+        emailError.textContent = '';
+        passwordError.textContent = '';
+        alertBox.style.display = 'none';
+        alertMsg.textContent = '';
+      }
+
+      function setLoading(loading) {
+        submitBtn.disabled = loading;
+        btnText.style.display = loading ? 'none' : 'inline-block';
+        btnLoader.style.display = loading ? 'inline-block' : 'none';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearErrors();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        let valid = true;
+
+        if (!email) {
+          emailError.textContent = 'Email is required';
+          valid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          emailError.textContent = 'Please enter a valid email address';
+          valid = false;
+        }
+
+        if (!password) {
+          passwordError.textContent = 'Password is required';
+          valid = false;
+        }
+
+        if (!valid) return;
+
+        setLoading(true);
+
+        try {
+          const res = await api.login(email, password);
+          if (res && res.access_token) {
+            window.location.href = 'dashboard.html';
+          }
+        } catch (err) {
+          alertBox.style.display = 'flex';
+          alertMsg.textContent = err.message || 'Login failed. Please verify credentials.';
+        } finally {
+          setLoading(false);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
