@@ -5,10 +5,7 @@
  */
 
 // Single source of truth for the backend URL (or override via window.PULSEAI_API_URL)
-const API_BASE_URL = window.PULSEAI_API_URL
-  || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-    ? 'http://127.0.0.1:8000/api/v1'
-    : '/api/v1');
+const API_BASE_URL = window.PULSEAI_API_URL || 'https://faaa-backend.onrender.com/api/v1';
 
 class ApiClient {
   constructor() {
