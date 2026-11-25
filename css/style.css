@@ -2234,9 +2234,12 @@ body::before,
   flex-direction: column;
   align-items: flex-end;
   gap: 12px;
+  pointer-events: none;
 }
 
 .cr7-fab {
+  pointer-events: auto;
+  touch-action: manipulation;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2356,7 +2359,12 @@ body::before,
   transition: opacity var(--transition-fast), transform var(--transition-fast);
 }
 
+.cr7-panel:not(.is-open) {
+  display: none !important;
+}
+
 .cr7-panel.is-open {
+  display: flex;
   opacity: 1;
   transform: translateY(0) scale(1);
   pointer-events: auto;
@@ -3088,4 +3096,40 @@ body::before,
     flex: 1 1 190px;
     font-size: 12px;
   }
+}
+
+
+/* ==========================================================================
+   GLOBAL MOBILE STACKING CONTEXT, NAV TAP TARGETS & TOUCH ACTION
+   ========================================================================== */
+html, body {
+  overflow-x: hidden;
+}
+
+.main-content {
+  position: relative;
+  z-index: 10;
+}
+
+.main-content button,
+.main-content a,
+.main-content input,
+.main-content select,
+.main-content textarea,
+.main-content label {
+  position: relative;
+  z-index: 10;
+  touch-action: manipulation;
+}
+
+.app-nav {
+  pointer-events: auto;
+}
+
+.app-nav .nav-item {
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
+  touch-action: manipulation;
+  pointer-events: auto;
 }

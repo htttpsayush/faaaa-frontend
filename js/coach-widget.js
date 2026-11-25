@@ -78,7 +78,7 @@
     root.className = 'cr7-widget-root';
 
     root.innerHTML = `
-      <div class="cr7-panel" id="cr7-panel" role="dialog" aria-label="Coach CR7 AI Fitness Chat" aria-hidden="true">
+      <div class="cr7-panel" id="cr7-panel" role="dialog" aria-label="Coach CR7 AI Fitness Chat" aria-hidden="true" hidden>
         <div class="cr7-header">
           <div class="cr7-header-left">
             ${renderAvatar('cr7-avatar-md')}
@@ -212,6 +212,7 @@
     }
 
     function setOpen(open) {
+      panel.hidden = !open;
       panel.classList.toggle('is-open', open);
       panel.setAttribute('aria-hidden', open ? 'false' : 'true');
       fab.setAttribute('aria-expanded', open ? 'true' : 'false');
