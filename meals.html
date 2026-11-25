@@ -461,23 +461,14 @@
             });
           }
 
-          const { normProbs, rawProbs } = tf.tidy(() => {
-            const base = tf.browser.fromPixels(previewImg).resizeBilinear([224, 224]).toFloat();
-            const normTensor = base.div(127.5).sub(1).expandDims(0);
-            const rawTensor = base.expandDims(0);
-            return {
-              normProbs: Array.from(foodModel.predict(normTensor).dataSync()),
-              rawProbs: Array.from(foodModel.predict(rawTensor).dataSync()),
-            };
+          const probs = tf.tidy(() => {
+            const inputTensor = tf.browser
+              .fromPixels(previewImg)
+              .resizeBilinear([224, 224])
+              .toFloat()
+              .expandDims(0);
+            return Array.from(foodModel.predict(inputTensor).dataSync());
           });
-
-          const formatProbMap = (arr) =>
-            Object.fromEntries(foodClasses.map((cls, i) => [cls, Number((arr[i] || 0).toFixed(4))]));
-
-          console.log('[PulseAI TF.js] Class probabilities ([-1, 1] normalized):', formatProbMap(normProbs));
-          console.log('[PulseAI TF.js] Class probabilities ([0, 255] raw, for built-in rescaling_1):', formatProbMap(rawProbs));
-
-          const probs = normProbs;
           let bestIdx = 0;
           let bestProb = probs[0] || 0;
           for (let i = 1; i < probs.length; i++) {
