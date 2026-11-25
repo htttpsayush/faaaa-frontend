@@ -133,8 +133,14 @@
       </div>
 
       <button type="button" class="cr7-fab" id="cr7-fab" aria-expanded="false" aria-controls="cr7-panel">
-        ${renderAvatar('cr7-avatar-lg')}
-        <span class="cr7-fab-label">Coach CR7</span>
+        <img
+          src="${AVATAR_SRC}"
+          alt="Coach CR7"
+          class="cr7-fab-cutout"
+          onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='grid';"
+        />
+        <span class="cr7-fab-fallback" style="display:none;" aria-hidden="true">CR7</span>
+        <span class="cr7-fab-label">Ask CR7</span>
       </button>
     `;
 

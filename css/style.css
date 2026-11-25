@@ -2274,26 +2274,59 @@ body::before {
 }
 
 .cr7-fab {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 6px 16px 6px 6px;
-  border-radius: var(--radius-full);
-  background: linear-gradient(135deg, rgba(22, 22, 26, 0.96), rgba(14, 14, 16, 0.98));
-  color: var(--color-text-primary);
-  border: 1px solid rgba(245, 158, 11, 0.55);
-  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.48), 0 0 18px rgba(245, 158, 11, 0.18);
-  font-family: var(--font-display);
-  font-size: 14px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
   cursor: pointer;
-  transition: transform var(--transition-fast), opacity var(--transition-fast), box-shadow var(--transition-fast);
+  transition: transform 0.2s ease;
 }
 
 .cr7-fab:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 32px rgba(0, 0, 0, 0.56), 0 0 24px rgba(245, 158, 11, 0.34);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.cr7-fab-cutout {
+  width: 78px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.65));
+}
+
+.cr7-fab-fallback {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid #f59e0b;
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: #0e0e10;
+  font-family: var(--font-display);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  place-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.55);
+}
+
+.cr7-fab-label {
+  position: relative;
+  margin-top: -8px;
+  background: rgba(18, 18, 22, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 1px solid rgba(245, 158, 11, 0.55);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
 }
 
 /* Circular Gold-Rimmed Cutout Avatar + Clean Monogram Fallback */
@@ -2307,11 +2340,6 @@ body::before {
   border: 1.5px solid #f59e0b;
   background: radial-gradient(circle at 50% 30%, rgba(245, 158, 11, 0.35), rgba(18, 18, 22, 0.95));
   flex-shrink: 0;
-}
-
-.cr7-avatar-lg {
-  width: 42px;
-  height: 42px;
 }
 
 .cr7-avatar-md {
