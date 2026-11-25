@@ -161,6 +161,10 @@
 
             <!-- Analysis Loading Skeleton -->
             <div id="photoSkeleton" style="display: none; margin-top: var(--space-sm);">
+              <div id="photoStatusBanner" style="display: none; align-items: center; gap: 10px; margin-bottom: 10px; padding: 10px 12px; border-radius: var(--radius-md); background: var(--color-bg-sand); border: 1px solid var(--color-border); font-family: var(--font-mono); font-size: 11px; color: var(--color-text-primary);">
+                <span class="btn-loader" style="display: inline-block; flex-shrink: 0;"></span>
+                <span id="photoStatusText">Analyzing...</span>
+              </div>
               <div class="skeleton-card" style="height: 60px;"></div>
               <div class="skeleton-card" style="height: 60px;"></div>
             </div>
@@ -496,6 +500,68 @@
       }
     }
 
+    async function analyzePhotoWithGroqVision({ isFallback = false } = {}) {
+      if (!selectedImageFile) return;
+
+      const skeleton = document.getElementById('photoSkeleton');
+      const statusBanner = document.getElementById('photoStatusBanner');
+      const statusText = document.getElementById('photoStatusText');
+      const container = document.getElementById('detectedItemsContainer');
+      const errorBanner = document.getElementById('photoErrorBanner');
+      const errorMsg = document.getElementById('photoErrorMsg');
+      const analyzeBtn = document.getElementById('analyzePhotoBtn');
+
+      errorBanner.style.display = 'none';
+      skeleton.style.display = 'block';
+      statusBanner.style.display = 'flex';
+      statusText.textContent = isFallback
+        ? 'Low local confidence — analyzing full plate with Pulse AI Vision...'
+        : 'Analyzing full plate with Pulse AI Vision...';
+      container.style.display = 'none';
+      analyzeBtn.disabled = true;
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 45000);
+
+      try {
+        const formData = new FormData();
+        formData.append('file', selectedImageFile, 'meal.jpg');
+
+        const token = api.getToken();
+        const response = await fetch(`${api.baseUrl}/nutrition/analyze-photo`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+          body: formData,
+          signal: controller.signal,
+        });
+
+        clearTimeout(timeoutId);
+        skeleton.style.display = 'none';
+        statusBanner.style.display = 'none';
+        analyzeBtn.disabled = false;
+
+        const data = await response.json().catch(() => null);
+        if (!response.ok) {
+          errorBanner.style.display = 'flex';
+          errorMsg.textContent = data?.detail || 'AI Vision analysis failed. You can still log meals manually.';
+          return;
+        }
+
+        renderDetectedItems(data?.items || [], { source: 'ai' });
+      } catch (err) {
+        clearTimeout(timeoutId);
+        skeleton.style.display = 'none';
+        statusBanner.style.display = 'none';
+        analyzeBtn.disabled = false;
+        errorBanner.style.display = 'flex';
+        errorMsg.textContent = err.name === 'AbortError'
+          ? 'Pulse AI Vision timed out (server may be waking up). Please retry or log manually.'
+          : (err.message || 'Connection error. Please try again or log manually.');
+      }
+    }
+
     function setupPhotoAnalysis() {
       const dropZone = document.getElementById('photoDropZone');
       const fileInput = document.getElementById('photoFileInput');
@@ -531,8 +597,10 @@
         if (!selectedImageFile || !previewImg.src) return;
 
         const skeleton = document.getElementById('photoSkeleton');
+        const statusBanner = document.getElementById('photoStatusBanner');
         const container = document.getElementById('detectedItemsContainer');
         errorBanner.style.display = 'none';
+        statusBanner.style.display = 'none';
         skeleton.style.display = 'block';
         container.style.display = 'none';
         analyzeBtn.disabled = true;
@@ -551,13 +619,19 @@
           }
 
           const probs = tf.tidy(() => {
-            const inputTensor = tf.browser
-              .fromPixels(previewImg)
+            const raw = tf.browser.fromPixels(previewImg);
+            const [height, width] = raw.shape;
+            const minDim = Math.min(height, width);
+            const startY = Math.floor((height - minDim) / 2);
+            const startX = Math.floor((width - minDim) / 2);
+            const cropped = raw.slice([startY, startX, 0], [minDim, minDim, 3]);
+            const inputTensor = cropped
               .resizeBilinear([224, 224])
               .toFloat()
               .expandDims(0);
             return Array.from(foodModel.predict(inputTensor).dataSync());
           });
+
           const ranked = probs
             .map((prob, idx) => ({ idx, prob }))
             .sort((a, b) => b.prob - a.prob)
@@ -565,9 +639,15 @@
 
           const top = ranked[0] || { idx: 0, prob: 0 };
           const bestProb = top.prob;
+
+          // Stage 2: Automatic fallback to Groq Vision if local TF.js confidence < 35%
+          if (bestProb < 0.35) {
+            await analyzePhotoWithGroqVision({ isFallback: true });
+            return;
+          }
+
           const predictedClass = foodClasses[top.idx] || '';
           const macroInfo = getFoodMacroInfo(predictedClass);
-
           const alternatives = ranked.slice(1).map((alt) => ({
             ...getFoodMacroInfo(foodClasses[alt.idx] || ''),
             confidence: alt.prob,
@@ -576,16 +656,15 @@
           skeleton.style.display = 'none';
           analyzeBtn.disabled = false;
 
-          const lowConfidence = bestProb < 0.35;
           renderDetectedItems([
             {
               ...macroInfo,
               confidence: bestProb,
-              needs_input: lowConfidence || macroInfo.calories === null,
-              reason: lowConfidence ? 'Low confidence — verify dish or enter manually' : '',
+              needs_input: macroInfo.calories === null,
+              reason: '',
               alternatives,
             },
-          ]);
+          ], { source: 'tfjs' });
         } catch (err) {
           skeleton.style.display = 'none';
           analyzeBtn.disabled = false;
@@ -636,7 +715,8 @@
       });
     }
 
-    function renderDetectedItems(items) {
+    function renderDetectedItems(items, options = {}) {
+      const source = options.source || 'tfjs';
       const container = document.getElementById('detectedItemsContainer');
       container.innerHTML = '';
 
@@ -695,7 +775,12 @@
             </div>
           </div>
 
-          <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
+            ${source !== 'ai' ? `
+              <button type="button" class="btn-subtle btn-sm scan-full-plate-btn">
+                Scan Full Plate (AI)
+              </button>
+            ` : '<span></span>'}
             <button type="button" class="btn-primary btn-sm add-detected-log-btn" data-index="${idx}">
               + ADD TO LOG &gt;&gt;&gt;
             </button>
@@ -726,6 +811,13 @@
               const confBadge = card.querySelector('.badge-confidence');
               if (confBadge) confBadge.textContent = `${Math.round((alt.confidence || 0) * 100)}% confidence`;
             });
+          });
+        }
+
+        const fullPlateBtn = card.querySelector('.scan-full-plate-btn');
+        if (fullPlateBtn) {
+          fullPlateBtn.addEventListener('click', () => {
+            analyzePhotoWithGroqVision({ isFallback: false });
           });
         }
 
