@@ -6,11 +6,26 @@
 (function () {
   const STORAGE_HISTORY_KEY = 'pulseai_cr7_history';
   const STORAGE_OPEN_KEY = 'pulseai_cr7_open';
+  const AVATAR_SRC = 'assets/cr7-coach.png';
   const QUICK_PROMPTS = [
     'Fix my macro gap today',
     'Plan my next workout',
     'Rate my discipline this week',
   ];
+
+  function renderAvatar(sizeClass) {
+    return `
+      <span class="cr7-avatar-circle ${sizeClass}" aria-hidden="true">
+        <img
+          src="${AVATAR_SRC}"
+          alt="Coach CR7"
+          class="cr7-avatar-img"
+          onerror="this.style.display='none'; if (this.nextElementSibling) this.nextElementSibling.style.display='grid';"
+        />
+        <span class="cr7-avatar-fallback" style="display:none;">CR7</span>
+      </span>
+    `;
+  }
 
   function loadHistory() {
     try {
@@ -66,9 +81,12 @@
       <div class="cr7-panel" id="cr7-panel" role="dialog" aria-label="Coach CR7 AI Fitness Chat" aria-hidden="true">
         <div class="cr7-header">
           <div class="cr7-header-left">
-            <span class="cr7-avatar" aria-hidden="true">CR7</span>
+            ${renderAvatar('cr7-avatar-md')}
             <div>
-              <div class="cr7-title">COACH CR7</div>
+              <div class="cr7-title-row">
+                <span class="cr7-online-dot" aria-hidden="true"></span>
+                <span class="cr7-title">Coach CR7</span>
+              </div>
               <div class="cr7-subtitle">HYBRID RAG // LIVE STATS</div>
             </div>
           </div>
@@ -115,8 +133,8 @@
       </div>
 
       <button type="button" class="cr7-fab" id="cr7-fab" aria-expanded="false" aria-controls="cr7-panel">
-        <span class="cr7-fab-dot" aria-hidden="true"></span>
-        <span class="cr7-fab-label">CR7 Coach</span>
+        ${renderAvatar('cr7-avatar-lg')}
+        <span class="cr7-fab-label">Coach CR7</span>
       </button>
     `;
 
@@ -146,20 +164,35 @@
       } else {
         let html = history
           .map((msg) => {
-            const cls = msg.role === 'user' ? 'cr7-msg cr7-msg-user' : 'cr7-msg cr7-msg-assistant';
+            if (msg.role === 'user') {
+              return `<div class="cr7-msg cr7-msg-user"><div class="cr7-bubble">${formatCoachText(msg.content)}</div></div>`;
+            }
             const topicsHtml =
-              msg.role === 'assistant' && Array.isArray(msg.topics) && msg.topics.length
+              Array.isArray(msg.topics) && msg.topics.length
                 ? `<div class="cr7-msg-topics">${msg.topics.map((t) => `<span>${escapeHtml(t)}</span>`).join('')}</div>`
                 : '';
-            return `<div class="${cls}"><div class="cr7-bubble">${formatCoachText(msg.content)}</div>${topicsHtml}</div>`;
+            return `
+              <div class="cr7-msg cr7-msg-assistant">
+                <div class="cr7-assistant-row">
+                  ${renderAvatar('cr7-avatar-sm')}
+                  <div class="cr7-assistant-content">
+                    <div class="cr7-bubble">${formatCoachText(msg.content)}</div>
+                    ${topicsHtml}
+                  </div>
+                </div>
+              </div>
+            `;
           })
           .join('');
 
         if (loading) {
           html += `
             <div class="cr7-msg cr7-msg-assistant">
-              <div class="cr7-bubble cr7-typing" aria-label="Coach CR7 is thinking">
-                <span></span><span></span><span></span>
+              <div class="cr7-assistant-row">
+                ${renderAvatar('cr7-avatar-sm')}
+                <div class="cr7-bubble cr7-typing" aria-label="Coach CR7 is thinking">
+                  <span></span><span></span><span></span>
+                </div>
               </div>
             </div>
           `;
