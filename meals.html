@@ -514,9 +514,7 @@
       errorBanner.style.display = 'none';
       skeleton.style.display = 'block';
       statusBanner.style.display = 'flex';
-      statusText.textContent = isFallback
-        ? 'Low local confidence — analyzing full plate with Pulse AI Vision...'
-        : 'Analyzing full plate with Pulse AI Vision...';
+      statusText.textContent = 'Analyzing plate with Pulse AI Vision...';
       container.style.display = 'none';
       analyzeBtn.disabled = true;
 
@@ -640,8 +638,8 @@
           const top = ranked[0] || { idx: 0, prob: 0 };
           const bestProb = top.prob;
 
-          // Stage 2: Automatic fallback to Groq Vision if local TF.js confidence < 35%
-          if (bestProb < 0.35) {
+          // Stage 2: Automatic fallback to Groq Vision if local TF.js confidence < 60%
+          if (bestProb < 0.60) {
             await analyzePhotoWithGroqVision({ isFallback: true });
             return;
           }
@@ -737,8 +735,8 @@
 
         card.innerHTML = `
           <div class="detected-item-header">
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span class="badge-chip badge-estimate">Estimated</span>
+            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+              <span class="badge-chip badge-estimate">${source === 'ai' ? 'Pulse AI Vision' : 'Instant Local CNN'}</span>
               <span class="badge-chip badge-confidence">${confidencePct}% confidence</span>
               ${needsInput ? '<span class="badge-chip badge-needs-input">Needs your input</span>' : ''}
             </div>
@@ -778,7 +776,7 @@
           <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px;">
             ${source !== 'ai' ? `
               <button type="button" class="btn-subtle btn-sm scan-full-plate-btn">
-                Scan Full Plate (AI)
+                Re-scan with AI Vision
               </button>
             ` : '<span></span>'}
             <button type="button" class="btn-primary btn-sm add-detected-log-btn" data-index="${idx}">
