@@ -2,13 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=dashboard.html">
-  <title>PulseAI — Redirecting</title>
-  <script>
-    window.location.href = localStorage.getItem('pulseai_token') ? 'dashboard.html' : 'login.html';
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulseAI — Feel Strong. Train With Purpose.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-  <p>Redirecting to <a href="dashboard.html">PulseAI Dashboard</a>...</p>
+<body class="landing-page">
+  <header class="landing-nav">
+    <a href="index.html" class="landing-brand">
+      <div class="brand-logo-symbol">
+        <svg width="24" height="15" viewBox="0 0 22 14" fill="currentColor">
+          <path d="M0 2h6v2H0zm8 0h6v2H8zm8 0h6v2h-6zM3 6h6v2H3zm8 0h6v2h-6zm8 0h3v2h-3zM6 10h6v2H6zm8 0h6v2h-6z"/>
+        </svg>
+      </div>
+      <span class="brand-wordmark">PulseAI</span>
+    </a>
+
+    <div class="landing-nav-actions" id="landingNavActions">
+      <a href="login.html" class="btn-subtle">Sign In</a>
+      <a href="signup.html" class="btn-primary btn-sm">Get Started</a>
+    </div>
+  </header>
+
+  <main class="landing-hero">
+    <section>
+      <span class="landing-kicker">Editorial Performance &amp; Nutrition OS</span>
+      <h1 class="landing-title">FEEL STRONG</h1>
+      <p class="landing-subtitle">
+        Track daily macros with meal photo analysis, structure your training across five disciplines, and stay disciplined with Coach CR7 — all in one calm, matte workspace.
+      </p>
+
+      <div class="editorial-pills">
+        <span class="editorial-pill pill-blush">HOME WORKOUT</span>
+        <span class="editorial-pill pill-lime">STRENGTH</span>
+        <span class="editorial-pill pill-amber">MUSCLE GAIN</span>
+        <span class="editorial-pill pill-lavender">FAT BURN</span>
+      </div>
+
+      <div class="landing-cta-row" id="landingCtaRow">
+        <a href="signup.html" class="btn-primary">Start Free Today &gt;&gt;&gt;</a>
+        <a href="login.html" class="btn-subtle">I Already Have an Account</a>
+      </div>
+    </section>
+
+    <section class="landing-bento-preview" aria-label="Feature Preview">
+      <div class="landing-stat-card is-forest">
+        <div class="card-label" style="color: #B8E946;">HYBRID RAG // COACH CR7</div>
+        <h2 class="card-heading" style="color: #F6F1E7; margin-top: 8px;">CHAMPION DISCIPLINE DAILY</h2>
+        <p class="card-subtext" style="color: rgba(246, 241, 231, 0.8);">
+          Live macro gap feedback, Indian high-protein meal swaps, and workout planning built around your real numbers.
+        </p>
+      </div>
+
+      <div class="landing-stat-card is-lime">
+        <div class="card-label" style="color: #2B140E;">NUTRITION</div>
+        <div class="pixel-number" style="font-size: 2.2rem; margin-top: 6px;">SNAP &amp; LOG</div>
+        <p class="card-subtext" style="color: #2B140E;">AI meal photo breakdown</p>
+      </div>
+
+      <div class="landing-stat-card is-sand">
+        <div class="card-label">DISCIPLINES</div>
+        <div class="pixel-number" style="font-size: 2.2rem; margin-top: 6px;">5 MODES</div>
+        <p class="card-subtext">Gym, Bodyweight, Speed, Endurance &amp; Rehab</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      const hasToken = Boolean(localStorage.getItem('pulseai_token'));
+      if (hasToken) {
+        const navActions = document.getElementById('landingNavActions');
+        const ctaRow = document.getElementById('landingCtaRow');
+        if (navActions) {
+          navActions.innerHTML = '<a href="dashboard.html" class="btn-primary btn-sm">Open Dashboard &gt;&gt;&gt;</a>';
+        }
+        if (ctaRow) {
+          ctaRow.innerHTML = '<a href="dashboard.html" class="btn-primary">Continue to Dashboard &gt;&gt;&gt;</a>';
+        }
+      }
+    })();
+  </script>
 </body>
 </html>
