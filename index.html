@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PulseAI — Feel Strong. Train With Purpose.</title>
+  <title>PulseAI — Feel Strong. Expressive Wellness &amp; Training.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="landing-page">
@@ -27,11 +27,11 @@
   </header>
 
   <main class="landing-hero">
-    <section>
-      <span class="landing-kicker">Editorial Performance &amp; Nutrition OS</span>
+    <section class="landing-hero-copy">
+      <span class="landing-kicker">Editorial Wellness &amp; Performance</span>
       <h1 class="landing-title">FEEL STRONG</h1>
       <p class="landing-subtitle">
-        Track daily macros with meal photo analysis, structure your training across five disciplines, and stay disciplined with Coach CR7 — all in one calm, matte workspace.
+        Snap meal photos for instant macro tracking, train across five structured disciplines, and build relentless consistency with Coach CR7.
       </p>
 
       <div class="editorial-pills">
@@ -43,33 +43,53 @@
 
       <div class="landing-cta-row" id="landingCtaRow">
         <a href="signup.html" class="btn-primary">Start Free Today &gt;&gt;&gt;</a>
-        <a href="login.html" class="btn-subtle">I Already Have an Account</a>
+        <a href="login.html" class="btn-subtle">Sign In</a>
       </div>
     </section>
 
-    <section class="landing-bento-preview" aria-label="Feature Preview">
-      <div class="landing-stat-card is-forest">
-        <div class="card-label" style="color: #B8E946;">HYBRID RAG // COACH CR7</div>
-        <h2 class="card-heading" style="color: #F6F1E7; margin-top: 8px;">CHAMPION DISCIPLINE DAILY</h2>
-        <p class="card-subtext" style="color: rgba(246, 241, 231, 0.8);">
-          Live macro gap feedback, Indian high-protein meal swaps, and workout planning built around your real numbers.
-        </p>
+    <!-- Expressive Hero Starburst + Overlapping Tilted Metric Pills -->
+    <section class="landing-visual-stage hero-starburst-host" aria-label="PulseAI Expressive Preview">
+      <svg class="hero-starburst-svg" viewBox="0 0 200 200" aria-hidden="true">
+        <path fill="#B8E946" d="M100 4 L117 56 L160 22 L144 74 L196 86 L150 112 L188 152 L134 146 L138 196 L100 158 L62 196 L66 146 L12 152 L50 112 L4 86 L56 74 L40 22 L83 56 Z"/>
+      </svg>
+
+      <div class="landing-center-card card-capsule">
+        <span class="card-label">TODAY'S FOCUS</span>
+        <h2 class="card-heading" style="font-size: 2rem; margin-top: 6px;">UPPER BODY + MACRO SYNC</h2>
+        <p class="card-subtext">Live calorie precision, 5 training modes &amp; Coach CR7 guidance.</p>
       </div>
 
-      <div class="landing-stat-card is-lime">
-        <div class="card-label" style="color: #2B140E;">NUTRITION</div>
-        <div class="pixel-number" style="font-size: 2.2rem; margin-top: 6px;">SNAP &amp; LOG</div>
-        <p class="card-subtext" style="color: #2B140E;">AI meal photo breakdown</p>
-      </div>
-
-      <div class="landing-stat-card is-sand">
-        <div class="card-label">DISCIPLINES</div>
-        <div class="pixel-number" style="font-size: 2.2rem; margin-top: 6px;">5 MODES</div>
-        <p class="card-subtext">Gym, Bodyweight, Speed, Endurance &amp; Rehab</p>
-      </div>
+      <span class="tilted-pill pill-blush" data-tilt="-6" style="top: 12px; left: 8px;">540 KCAL LOGGED</span>
+      <span class="tilted-pill pill-amber" data-tilt="4" style="bottom: 18px; left: 14px;">48 MIN ACTIVE</span>
+      <span class="tilted-pill pill-forest" data-tilt="-3" style="top: 24px; right: 6px;">COACH CR7 READY</span>
     </section>
   </main>
 
+  <section class="landing-bento-section">
+    <div class="landing-bento-grid">
+      <div class="bento-card card card-forest card-capsule landing-span-2" style="position: relative; overflow: visible;">
+        <span class="tilted-pill pill-lime" data-tilt="5" style="top: -12px; right: 20px;">NEW</span>
+        <span class="card-label" style="color: #B8E946;">HYBRID RAG // COACH CR7</span>
+        <h2 class="card-heading" style="color: #F6F0E4;">PERSONALIZED DAILY DISCIPLINE</h2>
+        <p class="card-subtext" style="color: rgba(246, 240, 228, 0.82);">Reads your live calorie shortfalls, diet preference, and last 7 days of training.</p>
+      </div>
+
+      <div class="bento-card card card-squircle">
+        <span class="card-label">NUTRITION</span>
+        <h2 class="card-heading">SNAP &amp; LOG</h2>
+        <p class="card-subtext">Groq Vision meal photo analysis + Indian high-protein swaps.</p>
+      </div>
+
+      <div class="bento-card card card-squircle">
+        <span class="card-label">DISCIPLINES</span>
+        <h2 class="card-heading">5 WORKOUT MODES</h2>
+        <p class="card-subtext">Bodyweight, Gym, Speed, Endurance &amp; safe Rehab mobility.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="js/motion.js"></script>
   <script>
     (function () {
       const hasToken = Boolean(localStorage.getItem('pulseai_token'));

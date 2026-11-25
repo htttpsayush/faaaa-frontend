@@ -6,37 +6,37 @@
 
 /* --- CSS Variables & Design Tokens --- */
 :root, [data-theme="dark"] {
-  /* Core Warm Editorial Palette */
-  --editorial-espresso: #2B140E;
-  --editorial-forest: #164E3B;
+  /* Core Expressive Shape-Driven Palette */
+  --editorial-espresso: #2C120C;
+  --editorial-forest: #14533C;
   --editorial-lime: #B8E946;
   --editorial-blush: #F7A8D0;
   --editorial-amber: #F7A438;
   --editorial-lavender: #A5A1DB;
 
-  --color-accent: #2B140E;           /* Deep Espresso Primary CTA */
-  --color-accent-hover: #3D1E16;
-  --color-accent-subtle: #EFE8DA;
-  --color-accent-glow: rgba(43, 20, 14, 0.08);
-  --color-accent-text: #F6F1E7;
-  --color-accent-contrast: #164E3B;
+  --color-accent: #2C120C;           /* Deep Espresso Primary CTA */
+  --color-accent-hover: #3F1C14;
+  --color-accent-subtle: #EDE4D3;
+  --color-accent-glow: rgba(44, 18, 12, 0.08);
+  --color-accent-text: #F6F0E4;
+  --color-accent-contrast: #14533C;
 
-  --color-bg-canvas: #F6F1E7;        /* Warm Bone / Cream */
-  --color-bg-sand: #EFE8DA;          /* Secondary Warm Sand */
-  --color-bg-card: #FFFDF9;          /* Clean Flat Ivory */
-  --color-bg-card-hover: #EFE8DA;
-  --color-bg-subtle: #EFE8DA;
-  --color-bg-pill: #EFE8DA;
-  --color-bg-active-pill: #F6F1E7;
+  --color-bg-canvas: #F6F0E4;        /* Warm Bone / Cream */
+  --color-bg-sand: #EDE4D3;          /* Soft Sand */
+  --color-bg-card: #FFFDF9;          /* Crisp Ivory */
+  --color-bg-card-hover: #EDE4D3;
+  --color-bg-subtle: #EDE4D3;
+  --color-bg-pill: #EDE4D3;
+  --color-bg-active-pill: #F6F0E4;
 
-  --color-border: rgba(43, 20, 14, 0.12);
-  --color-border-subtle: rgba(43, 20, 14, 0.08);
-  --color-border-active: #2B140E;
+  --color-border: rgba(44, 18, 12, 0.12);
+  --color-border-subtle: rgba(44, 18, 12, 0.08);
+  --color-border-active: #2C120C;
 
-  --color-text-primary: #2B140E;     /* Deep Espresso Brown */
-  --color-text-secondary: #6B5B53;   /* Muted Taupe */
-  --color-text-muted: #6B5B53;
-  --color-text-inverse: #F6F1E7;
+  --color-text-primary: #2C120C;     /* Deep Espresso */
+  --color-text-secondary: #6D5952;   /* Muted Cocoa */
+  --color-text-muted: #6D5952;
+  --color-text-inverse: #F6F0E4;
 
   --color-danger: #B91C1C;
   --color-danger-bg: rgba(185, 28, 28, 0.1);
@@ -2837,4 +2837,140 @@ body::before,
 .btn-analyze-ai:hover,
 .btn-gen-ai:hover {
   background: #3D1E16 !important;
+}
+
+
+/* ==========================================================================
+   EXPRESSIVE SHAPE-DRIVEN SILHOUETTES (STARBURST, TILTED PILLS, SQUIRCLES)
+   ========================================================================== */
+.hero-starburst-host {
+  position: relative;
+}
+
+.hero-starburst-bg {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-activity-rings > *:not(.hero-starburst-svg):not(.tilted-pill) {
+  position: relative;
+  z-index: 1;
+}
+
+.landing-visual-stage {
+  position: relative;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.landing-visual-stage .hero-starburst-svg {
+  position: absolute;
+  width: 290px;
+  height: 290px;
+  z-index: 0;
+}
+
+.landing-center-card {
+  position: relative;
+  z-index: 1;
+  background: #FFFDF9;
+  border: 1px solid rgba(44, 18, 12, 0.14);
+  padding: 28px;
+  max-width: 310px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(44, 18, 12, 0.08);
+}
+
+.card-capsule {
+  border-radius: 32px !important;
+}
+
+.card-squircle,
+.card-workout,
+.card-calories,
+.workout-item-card,
+.meal-item-row {
+  border-radius: 36px 14px 36px 14px !important;
+}
+
+.card-forest {
+  background: var(--editorial-forest) !important;
+  color: #F6F0E4 !important;
+}
+
+.tilted-pill {
+  position: absolute;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(44, 18, 12, 0.16);
+  box-shadow: 0 4px 12px rgba(44, 18, 12, 0.12);
+  cursor: default;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.scallop-badge {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.scallop-badge svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.scallop-badge .avatar-badge {
+  position: relative;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+}
+
+.landing-bento-section {
+  width: 100%;
+  max-width: 1180px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+
+.landing-bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .landing-bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .landing-span-2 {
+    grid-column: span 2;
+  }
 }

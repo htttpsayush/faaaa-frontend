@@ -6,7 +6,7 @@
   <title>PulseAI — Athlete Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Plus+Jakarta+Sans:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="app-body">
@@ -93,7 +93,12 @@
           </h1>
         </div>
         <div class="header-badges">
-          <div class="avatar-badge" id="userAvatarBadge" title="Athlete Profile">PA</div>
+          <div class="scallop-badge" title="Active Streak">
+            <svg viewBox="0 0 60 60" aria-hidden="true">
+              <path fill="#F7A8D0" d="M30 2 L35 9 L44 6 L45 15 L54 16 L51 25 L58 30 L51 35 L54 44 L45 45 L44 54 L35 51 L30 58 L25 51 L16 54 L15 45 L6 44 L9 35 L2 30 L9 25 L6 16 L15 15 L16 6 L25 9 Z"/>
+            </svg>
+            <div class="avatar-badge" id="userAvatarBadge" title="Athlete Profile">PA</div>
+          </div>
           <span class="status-pill status-live">LIVE METRICS</span>
         </div>
       </header>
@@ -114,8 +119,12 @@
       <!-- Modern Bento Grid -->
       <div class="bento-grid dashboard-bento">
 
-        <!-- 2. Activity Rings Card (Smartwatch Style, Largest Bento Card) -->
-        <section class="card card-activity-rings" id="activityRingsCard" aria-label="Activity Rings Card">
+        <!-- 2. Activity Rings Card (Hero Starburst Backdrop + Overlapping Tilted Pills) -->
+        <section class="card card-activity-rings hero-starburst-host" id="activityRingsCard" aria-label="Activity Rings Card" style="overflow: visible;">
+          <svg class="hero-starburst-svg hero-starburst-bg" viewBox="0 0 200 200" aria-hidden="true">
+            <path fill="#B8E946" opacity="0.24" d="M100 4 L117 56 L160 22 L144 74 L196 86 L150 112 L188 152 L134 146 L138 196 L100 158 L62 196 L66 146 L12 152 L50 112 L4 86 L56 74 L40 22 L83 56 Z"/>
+          </svg>
+          <span class="tilted-pill pill-blush" data-tilt="-5" style="top: -12px; right: 18px;">DAILY RINGS</span>
           <div class="card-header">
             <span class="card-label">ACTIVITY SPECTRUM // 3-RING</span>
             <span class="card-badge" id="activityRingsStatus">CONCENTRIC</span>
@@ -175,8 +184,9 @@
           </div>
         </section>
 
-        <!-- 3. PulseScore: Solid Lime Card with Giant Black Number (Design Reference) -->
-        <section class="card card-pulsescore" aria-label="PulseScore Card">
+        <!-- 3. PulseScore: Forest Emerald Stadium Capsule with Tilted New Pill -->
+        <section class="card card-pulsescore card-capsule" aria-label="PulseScore Card" style="overflow: visible;">
+          <span class="tilted-pill pill-lime" data-tilt="5" style="top: -11px; right: 18px;">AI SYNCED</span>
           <div class="card-header">
             <span class="card-label">RECOVERY // INDEX</span>
             <span class="card-badge pulse-badge" id="pulseScoreBadge">--</span>
@@ -337,10 +347,12 @@
     </main>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="js/api.js"></script>
   <script src="js/scramble.js"></script>
   <script src="js/rings.js"></script>
   <script src="js/lamp.js"></script>
+  <script src="js/motion.js"></script>
   <script src="js/coach-widget.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
