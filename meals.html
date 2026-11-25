@@ -221,62 +221,66 @@
 
         </div>
 
-        <!-- RIGHT COLUMN: Diet Suggestions & Logged Meals -->
+        <!-- RIGHT COLUMN: Logged Meals, Macro Shortage, Next Meal Suggestions -->
         <div style="display: flex; flex-direction: column; gap: var(--space-md);">
 
-          <!-- 1b. Diet Suggestions Card -->
-          <section class="card diet-suggestions-card" id="dietSuggestionsCard" aria-label="Diet Suggestions">
+          <!-- Card 1: Single Logged Meals Card (Line-by-Line) -->
+          <section class="card today-meals-card" aria-label="Logged Meals">
             <div class="card-header">
-              <span class="card-label">RECOVERY // TARGET SHORTFALLS</span>
-              <div class="preference-pills" id="prefPillsContainer" title="Change diet preference">
+              <span class="card-label">LOGGED MEALS</span>
+              <span class="mono-tag" id="mealsCountTag">0</span>
+            </div>
+
+            <div id="mealsLoading" class="skeleton-list">
+              <div class="skeleton-card" style="height: 36px;"></div>
+              <div class="skeleton-card" style="height: 36px;"></div>
+            </div>
+
+            <div id="mealsEmpty" class="empty-state-mini" style="display: none; padding: 12px 0;">
+              <p class="empty-desc">No meals logged</p>
+            </div>
+
+            <div id="mealsList" style="display: none; flex-direction: column;">
+              <!-- Populated dynamically line-by-line -->
+            </div>
+          </section>
+
+          <!-- Card 2: Macro Shortage Card -->
+          <section class="card macro-shortage-card" id="macroShortageCard" aria-label="Macro Shortage">
+            <div class="card-header">
+              <span class="card-label">MACRO SHORTAGE</span>
+              <span class="card-badge" id="shortageStatusBadge">--</span>
+            </div>
+            <div id="shortageLine" style="font-family: var(--font-mono); font-size: 13px; color: var(--color-text-primary); line-height: 1.6;">
+              Remaining Shortage — 0 kcal | 0g P | 0g F | 0g C
+            </div>
+          </section>
+
+          <!-- Card 3: Next Meal Suggestions Card -->
+          <section class="card diet-suggestions-card" id="dietSuggestionsCard" aria-label="Next Meal Suggestions">
+            <div class="card-header">
+              <span class="card-label">NEXT MEAL SUGGESTIONS</span>
+              <div class="preference-pills" id="prefPillsContainer" title="Diet preference">
                 <button type="button" class="pref-pill" data-pref="any">ANY</button>
                 <button type="button" class="pref-pill" data-pref="veg">VEG</button>
                 <button type="button" class="pref-pill" data-pref="non_veg">NON-VEG</button>
               </div>
             </div>
 
-            <div id="suggestionsLoading" class="skeleton-list">
-              <div class="skeleton-card" style="height: 50px;"></div>
+            <div id="suggestionsLoading" class="skeleton-list" style="display: none;">
+              <div class="skeleton-card" style="height: 36px;"></div>
             </div>
 
-            <!-- Empty State 1: Nothing logged yet -->
-            <div id="sugEmptyNoMeals" class="empty-state-mini" style="display: none;">
+            <div id="sugEmptyNoMeals" class="empty-state-mini" style="display: none; padding: 12px 0;">
               <p class="empty-desc">Log a meal to get suggestions</p>
-              <p class="empty-text">Track breakfast, lunch, or a snack to unlock intelligent shortfall targets.</p>
             </div>
 
-            <!-- Empty State 2: On track -->
-            <div id="sugEmptyOnTrack" class="empty-state-mini" style="display: none;">
-              <span class="badge-chip badge-estimate" style="font-size: 11px;">TARGETS MET</span>
-              <p class="empty-desc" style="color: var(--color-accent); margin-top: 6px;">You're on track today</p>
-              <p class="empty-text">Your consumed macronutrients are within budget of your daily goals.</p>
+            <div id="sugEmptyOnTrack" class="empty-state-mini" style="display: none; padding: 12px 0;">
+              <p class="empty-desc" style="color: var(--color-success);">Targets met</p>
             </div>
 
-            <!-- Populated Shortfalls List -->
-            <div id="shortfallsContainer" class="shortfalls-list" style="display: none;">
-              <!-- Populated dynamically via JS -->
-            </div>
-          </section>
-
-          <!-- Today's Logged Meals Card -->
-          <section class="card today-meals-card" aria-label="Today Meals List">
-            <div class="card-header">
-              <span class="card-label">LOGGED TODAY</span>
-              <span class="mono-tag" id="mealsCountTag">--</span>
-            </div>
-
-            <div id="mealsLoading" class="skeleton-list">
-              <div class="skeleton-card"></div>
-              <div class="skeleton-card"></div>
-            </div>
-
-            <div id="mealsEmpty" class="empty-state-mini" style="display: none;">
-              <p class="empty-desc">No meals yet</p>
-              <p class="empty-text">Log your breakfast, lunch, or dinner above to monitor caloric deficit or surplus.</p>
-            </div>
-
-            <div id="mealsList" class="meals-stack" style="display: none;">
-              <!-- Populated dynamically via JS -->
+            <div id="shortfallsContainer" style="display: none; flex-direction: column;">
+              <!-- Populated dynamically line-by-line with + Log -->
             </div>
           </section>
 
@@ -298,6 +302,8 @@
     let hasScrambledTotals = false;
     let selectedImageFile = null;
     let currentDietPreference = 'any';
+    let currentUserWeightKg = 70;
+    let currentShortage = { calories: 0, protein: 0, fats: 0, carbs: 0 };
 
     document.addEventListener('DOMContentLoaded', async () => {
       if (!api.getToken()) {
@@ -307,11 +313,12 @@
 
       document.getElementById('logoutBtn').addEventListener('click', () => api.logout());
 
-      // Fetch user profile to read initial diet preference
+      // Fetch user profile to read initial diet preference & weight
       try {
         const user = await api.get('/users/me');
-        if (user && user.diet_preference) {
-          currentDietPreference = user.diet_preference;
+        if (user) {
+          if (user.diet_preference) currentDietPreference = user.diet_preference;
+          if (user.weight_kg) currentUserWeightKg = Number(user.weight_kg) || 70;
         }
         updatePrefPillsUI();
       } catch (err) {
@@ -378,10 +385,8 @@
     }
 
     async function refreshAllNutrition() {
-      await Promise.all([
-        loadNutritionData(),
-        loadDietSuggestions()
-      ]);
+      await loadNutritionData();
+      await loadDietSuggestions();
     }
 
     // --- PHOTO RESIZE & ANALYSIS (80-Class Indian Food TF.js Model) ---
@@ -865,82 +870,99 @@
       });
     }
 
-    // --- 1b. DIET SUGGESTIONS ---
+    // --- CARD 2 & CARD 3: MACRO SHORTAGE + NEXT MEAL SUGGESTIONS ---
+    const NON_VEG_DISH_KEYS = new Set([
+      'biryani', 'butter_chicken', 'chicken_razala', 'chicken_tikka', 'chicken_tikka_masala', 'maach_jhol'
+    ]);
+
+    function pickSuggestedDishes(shortage, pref, limit = 3) {
+      const candidates = Object.entries(INDIAN_FOOD_MACROS)
+        .filter(([key]) => {
+          if (pref === 'veg') return !NON_VEG_DISH_KEYS.has(key);
+          if (pref === 'non_veg') return true;
+          return true;
+        })
+        .map(([key, dish]) => {
+          let score = 0;
+          if (shortage.protein > 0) score += dish.protein_g * 2.5;
+          if (shortage.carbs > 0) score += dish.carbs_g * 0.6;
+          if (shortage.fats > 0) score += dish.fats_g * 0.5;
+          if (shortage.calories > 0 && dish.calories <= shortage.calories + 120) score += 20;
+          if (pref === 'non_veg' && NON_VEG_DISH_KEYS.has(key)) score += 12;
+          return { key, ...dish, score };
+        });
+
+      candidates.sort((a, b) => b.score - a.score);
+      return candidates.slice(0, limit);
+    }
+
     async function loadDietSuggestions() {
       const loading = document.getElementById('suggestionsLoading');
       const emptyNoMeals = document.getElementById('sugEmptyNoMeals');
       const emptyOnTrack = document.getElementById('sugEmptyOnTrack');
       const container = document.getElementById('shortfallsContainer');
 
-      loading.style.display = 'block';
+      loading.style.display = 'none';
       emptyNoMeals.style.display = 'none';
       emptyOnTrack.style.display = 'none';
       container.style.display = 'none';
 
-      try {
-        const data = await api.get('/nutrition/suggestions');
-        loading.style.display = 'none';
+      const s = currentShortage;
+      if (s.calories <= 0 && s.protein <= 0 && s.fats <= 0 && s.carbs <= 0) {
+        emptyOnTrack.style.display = 'block';
+        return;
+      }
 
-        if (!data) return;
+      const dishes = pickSuggestedDishes(s, currentDietPreference, 3);
+      if (!dishes.length) {
+        emptyNoMeals.style.display = 'block';
+        return;
+      }
 
-        // Empty state: No meals yet
-        if (data.message === 'Log a meal to get suggestions') {
-          emptyNoMeals.style.display = 'block';
-          return;
-        }
+      container.innerHTML = '';
+      container.style.display = 'flex';
 
-        // Empty state: On track
-        if (!data.has_shortfall || (data.shortfalls && data.shortfalls.length === 0)) {
-          emptyOnTrack.style.display = 'block';
-          return;
-        }
+      dishes.forEach((dish) => {
+        const row = document.createElement('div');
+        row.style.cssText = 'display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--color-border-subtle);';
 
-        // Render shortfalls
-        container.innerHTML = '';
-        container.style.display = 'flex';
+        row.innerHTML = `
+          <span style="font-family: var(--font-mono); font-size: 12.5px; color: var(--color-text-primary); line-height: 1.4;">
+            <strong>${escapeHtml(dish.name)}</strong> — ${Math.round(dish.calories)} kcal | ${Math.round(dish.protein_g)}g P | ${Math.round(dish.fats_g)}g F | ${Math.round(dish.carbs_g)}g C
+          </span>
+          <button type="button" class="btn-primary btn-sm quick-log-sug-btn" style="flex-shrink: 0; padding: 6px 12px; font-size: 11px;">+ Log</button>
+        `;
 
-        data.shortfalls.forEach((sf) => {
-          const card = document.createElement('div');
-          card.className = 'shortfall-card';
-
-          let suggestionsHtml = '';
-          if (sf.suggestions && sf.suggestions.length > 0) {
-            suggestionsHtml = `
-              <div class="suggestions-grid">
-                ${sf.suggestions.map(s => `
-                  <div class="suggestion-pill">
-                    <span class="sug-food">${escapeHtml(s.food_name)}</span>
-                    <span class="sug-detail">${escapeHtml(s.serving)} • +${escapeHtml(s.nutrient_amount)}</span>
-                  </div>
-                `).join('')}
-              </div>
-            `;
-          } else {
-            suggestionsHtml = `
-              <p style="font-family: var(--font-mono); font-size: 11px; color: var(--color-text-muted); margin-top: 6px;">
-                About ${sf.shortfall_amount} ${sf.unit} more ${sf.nutrient.toLowerCase()} needed to reach target.
-              </p>
-            `;
+        const btn = row.querySelector('.quick-log-sug-btn');
+        btn.addEventListener('click', async () => {
+          btn.disabled = true;
+          btn.textContent = 'Saving...';
+          try {
+            await api.post('/nutrition/meals', {
+              name: dish.name,
+              calories: dish.calories,
+              portion_size: dish.serving || `${dish.estimated_grams || 150}g`,
+              protein_g: dish.protein_g,
+              carbs_g: dish.carbs_g,
+              fats_g: dish.fats_g,
+            });
+            await refreshAllNutrition();
+          } catch (err) {
+            btn.disabled = false;
+            btn.textContent = '+ Log';
+            alert(err.message || 'Error logging suggested meal');
           }
-
-          card.innerHTML = `
-            <div class="shortfall-header">
-              <span class="shortfall-name">${escapeHtml(sf.nutrient)} Shortfall</span>
-              <span class="shortfall-stat">${sf.shortfall_amount} ${sf.unit} deficit (${sf.consumed} / ${sf.target} ${sf.unit})</span>
-            </div>
-            ${suggestionsHtml}
-          `;
-
-          container.appendChild(card);
         });
 
-      } catch (err) {
-        console.error('Failed to load diet suggestions:', err);
-        loading.style.display = 'none';
+        container.appendChild(row);
+      });
+
+      if (container.lastElementChild) {
+        container.lastElementChild.style.borderBottom = 'none';
       }
     }
 
-    // --- DAILY NUTRITION TOTALS & MEALS LIST ---
+    // --- DAILY NUTRITION TOTALS, LOGGED MEALS & MACRO SHORTAGE ---
     async function loadNutritionData() {
       const loading = document.getElementById('mealsLoading');
       const empty = document.getElementById('mealsEmpty');
@@ -977,9 +999,33 @@
           : 0;
         document.getElementById('dailyGoalPct').textContent = `${pct}% OF TARGET`;
 
-        // Render Meals List
+        // Calculate & Render Card 2 (Macro Shortage)
+        const targetCal = Number(todayTotals.target_calories || 2000);
+        const targetPro = Math.round(1.6 * currentUserWeightKg);
+        const targetFat = Math.round((0.25 * targetCal) / 9);
+        const targetCarb = Math.round(Math.max(0, targetCal - (targetPro * 4) - (targetFat * 9)) / 4);
+
+        const remCal = Math.max(0, Math.round(targetCal - Number(todayTotals.total_calories || 0)));
+        const remPro = Math.max(0, Math.round(targetPro - Number(todayTotals.total_protein || 0)));
+        const remFat = Math.max(0, Math.round(targetFat - Number(todayTotals.total_fats || 0)));
+        const remCarb = Math.max(0, Math.round(targetCarb - Number(todayTotals.total_carbs || 0)));
+        currentShortage = { calories: remCal, protein: remPro, fats: remFat, carbs: remCarb };
+
+        const shortageLineEl = document.getElementById('shortageLine');
+        const shortageBadge = document.getElementById('shortageStatusBadge');
+        const hasDeficit = remCal > 0 || remPro > 0 || remFat > 0 || remCarb > 0;
+        if (shortageBadge) {
+          shortageBadge.textContent = hasDeficit ? 'DEFICIT' : 'ON TRACK';
+        }
+        if (shortageLineEl) {
+          const calStr = remCal > 0 ? `<span style="color: var(--color-danger); font-weight: 700;">${remCal} kcal</span>` : `${remCal} kcal`;
+          const proStr = remPro > 0 ? `<span style="color: var(--color-danger); font-weight: 700;">${remPro}g P</span>` : `${remPro}g P`;
+          shortageLineEl.innerHTML = `<strong>Remaining Shortage</strong> — ${calStr} | ${proStr} | ${remFat}g F | ${remCarb}g C`;
+        }
+
+        // Render Card 1: Single Logged Meals Card (Line-by-Line)
         loading.style.display = 'none';
-        document.getElementById('mealsCountTag').textContent = `${meals.length} ITEMS`;
+        document.getElementById('mealsCountTag').textContent = `${meals.length}`;
 
         if (!meals || meals.length === 0) {
           empty.style.display = 'block';
@@ -989,20 +1035,16 @@
         list.innerHTML = '';
         list.style.display = 'flex';
 
-        meals.forEach((m) => {
+        meals.forEach((m, idx) => {
           const item = document.createElement('div');
-          item.className = 'meal-entry-row';
           item.id = `meal-${m.id}`;
+          item.style.cssText = `display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 0;${idx < meals.length - 1 ? ' border-bottom: 1px solid var(--color-border-subtle);' : ''}`;
 
           item.innerHTML = `
-            <div class="meal-info">
-              <span class="meal-name">${escapeHtml(m.name)}</span>
-              <span class="meal-portion">${escapeHtml(m.portion_size || '1 serving')} • P: ${m.protein_g}g | C: ${m.carbs_g}g | F: ${m.fats_g}g</span>
-            </div>
-            <div class="meal-right">
-              <span class="meal-cals">${Math.round(m.calories)} <small>kcal</small></span>
-              <button type="button" class="btn-icon-del delete-meal-btn" data-id="${m.id}" title="Delete meal" aria-label="Delete meal">&times;</button>
-            </div>
+            <span style="font-family: var(--font-mono); font-size: 12.5px; color: var(--color-text-primary); line-height: 1.4;">
+              <strong>${escapeHtml(m.name)}</strong> — ${Math.round(m.calories)} kcal | ${Math.round(m.protein_g)}g P | ${Math.round(m.fats_g)}g F | ${Math.round(m.carbs_g)}g C
+            </span>
+            <button type="button" class="btn-icon-del delete-meal-btn" data-id="${m.id}" title="Delete" aria-label="Delete meal" style="flex-shrink: 0;">&times;</button>
           `;
 
           list.appendChild(item);
@@ -1011,13 +1053,11 @@
         list.querySelectorAll('.delete-meal-btn').forEach(btn => {
           btn.addEventListener('click', async () => {
             const id = btn.getAttribute('data-id');
-            if (confirm('Delete this meal entry?')) {
-              try {
-                await api.delete(`/nutrition/meals/${id}`);
-                await refreshAllNutrition();
-              } catch (err) {
-                alert(err.message || 'Error deleting meal');
-              }
+            try {
+              await api.delete(`/nutrition/meals/${id}`);
+              await refreshAllNutrition();
+            } catch (err) {
+              alert(err.message || 'Error deleting meal');
             }
           });
         });
