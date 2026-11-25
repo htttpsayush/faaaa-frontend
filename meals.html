@@ -283,6 +283,7 @@
     </main>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.20.0/dist/tf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="js/api.js"></script>
   <script src="js/scramble.js"></script>
@@ -380,6 +381,32 @@
     }
 
     // --- PHOTO RESIZE & ANALYSIS (Browser Canvas resize to max 1024px) ---
+    const INDIAN_FOOD_MACROS = {
+      aloo_gobi: { name: 'Aloo Gobi', estimated_grams: 200, calories: 220, protein_g: 5, carbs_g: 26, fats_g: 11 },
+      biryani: { name: 'Biryani', estimated_grams: 300, calories: 490, protein_g: 22, carbs_g: 56, fats_g: 18 },
+      chapati: { name: 'Chapati', estimated_grams: 45, calories: 120, protein_g: 3.5, carbs_g: 22, fats_g: 2 },
+      dal_makhani: { name: 'Dal Makhani', estimated_grams: 220, calories: 340, protein_g: 12, carbs_g: 30, fats_g: 18 },
+      dal_tadka: { name: 'Dal Tadka', estimated_grams: 220, calories: 230, protein_g: 11, carbs_g: 28, fats_g: 8 },
+      gulab_jamun: { name: 'Gulab Jamun', estimated_grams: 80, calories: 280, protein_g: 3.5, carbs_g: 42, fats_g: 11 },
+      naan: { name: 'Naan', estimated_grams: 90, calories: 260, protein_g: 7, carbs_g: 46, fats_g: 5 },
+      palak_paneer: { name: 'Palak Paneer', estimated_grams: 220, calories: 320, protein_g: 15, carbs_g: 12, fats_g: 24 },
+      poha: { name: 'Poha', estimated_grams: 180, calories: 250, protein_g: 5, carbs_g: 44, fats_g: 6 },
+    };
+
+    let foodModel = null;
+    let foodClasses = null;
+
+    async function ensureFoodModelLoaded() {
+      if (!foodModel) {
+        foodModel = await tf.loadGraphModel('model/model.json');
+      }
+      if (!foodClasses) {
+        const res = await fetch('model/classes.json');
+        if (!res.ok) throw new Error('Failed to load model/classes.json');
+        foodClasses = await res.json();
+      }
+    }
+
     function setupPhotoAnalysis() {
       const dropZone = document.getElementById('photoDropZone');
       const fileInput = document.getElementById('photoFileInput');
@@ -397,7 +424,6 @@
 
         errorBanner.style.display = 'none';
 
-        // Resize image on client using an in-memory Canvas to keep uploads under 1024px
         try {
           const resizedBlob = await resizeImageToMax(file, 1024);
           selectedImageFile = resizedBlob;
@@ -413,7 +439,7 @@
       });
 
       analyzeBtn.addEventListener('click', async () => {
-        if (!selectedImageFile) return;
+        if (!selectedImageFile || !previewImg.src) return;
 
         const skeleton = document.getElementById('photoSkeleton');
         const container = document.getElementById('detectedItemsContainer');
@@ -423,36 +449,62 @@
         analyzeBtn.disabled = true;
 
         try {
-          const formData = new FormData();
-          formData.append('file', selectedImageFile, 'meal.jpg');
+          if (typeof tf === 'undefined') {
+            throw new Error('TensorFlow.js failed to load.');
+          }
 
-          // Send multipart request to /api/v1/nutrition/analyze-photo
-          const token = api.getToken();
-          const response = await fetch(`${api.baseUrl}/nutrition/analyze-photo`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            },
-            body: formData
+          await ensureFoodModelLoaded();
+
+          if (!previewImg.complete) {
+            await new Promise((resolve) => {
+              previewImg.onload = resolve;
+            });
+          }
+
+          const probs = tf.tidy(() => {
+            const inputTensor = tf.browser
+              .fromPixels(previewImg)
+              .resizeBilinear([224, 224])
+              .toFloat()
+              .expandDims(0);
+            const prediction = foodModel.predict(inputTensor);
+            return prediction.dataSync();
           });
+
+          let bestIdx = 0;
+          let bestProb = probs[0] || 0;
+          for (let i = 1; i < probs.length; i++) {
+            if (probs[i] > bestProb) {
+              bestProb = probs[i];
+              bestIdx = i;
+            }
+          }
+
+          const predictedClass = foodClasses[bestIdx] || '';
+          const macroInfo = INDIAN_FOOD_MACROS[predictedClass] || {
+            name: predictedClass.replace(/_/g, ' '),
+            estimated_grams: 150,
+            calories: null,
+            protein_g: null,
+            carbs_g: null,
+            fats_g: null,
+          };
 
           skeleton.style.display = 'none';
           analyzeBtn.disabled = false;
 
-          const data = await response.json().catch(() => null);
-
-          if (!response.ok) {
-            errorBanner.style.display = 'flex';
-            errorMsg.textContent = data?.detail || 'Photo analysis failed. You can still log meals manually.';
-            return;
-          }
-
-          renderDetectedItems(data.items || []);
+          renderDetectedItems([
+            {
+              ...macroInfo,
+              confidence: bestProb,
+              needs_input: bestProb < 0.4 || macroInfo.calories === null,
+            },
+          ]);
         } catch (err) {
           skeleton.style.display = 'none';
           analyzeBtn.disabled = false;
           errorBanner.style.display = 'flex';
-          errorMsg.textContent = err.message || 'Connection error. Please try again or log manually.';
+          errorMsg.textContent = err.message || 'Local photo inference failed. You can still log meals manually.';
         }
       });
     }
