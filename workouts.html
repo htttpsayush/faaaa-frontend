@@ -85,10 +85,10 @@
     <main class="main-content">
       <header class="content-header">
         <div>
-          <span class="header-kicker">TRAINING LOGS // SESSIONS</span>
+          <span class="header-kicker">TRAINING</span>
           <h1 class="header-title">Workouts</h1>
         </div>
-        <button type="button" class="btn-primary" id="openAddWorkoutModalBtn">+ LOG SESSION &gt;&gt;&gt;</button>
+        <button type="button" class="btn-primary" id="openAddWorkoutModalBtn">+ Log Workout</button>
       </header>
 
       <!-- Category Filter Tabs: All + 5 Specific Categories -->
@@ -104,11 +104,11 @@
       <!-- AI Workout Generator Card -->
       <section class="card generator-card" id="generatorCard" aria-label="AI Workout Generator">
         <div class="card-header">
-          <span class="card-label">COACH AI // TAILORED SESSION</span>
+          <span class="card-label">WORKOUT BUILDER</span>
           <span class="badge-chip badge-estimate" id="genCategoryBadge">GYM</span>
         </div>
-        <h3 class="card-heading-sm" id="genCardTitle">Generate Personalised Workout</h3>
-        <p class="card-subtext" id="genCardDesc">Constructs a targeted session adapted to your recent history and biometrics.</p>
+        <h3 class="card-heading-sm" id="genCardTitle">Generate Workout</h3>
+        <p class="card-subtext" id="genCardDesc" style="display: none;"></p>
 
         <!-- Category-Specific Generator Inputs -->
         <form id="generateWorkoutForm" class="bento-form" style="margin-top: var(--space-sm);">

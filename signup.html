@@ -30,20 +30,13 @@
       </div>
 
       <div class="brand-hero-content">
-        <span class="brand-sub-badge">INITIATE METRICS</span>
-        <h1 class="brand-pixel-title">ENGINEERED FOR PROGRESS.</h1>
-        <p class="brand-desc">Configure your personal biometric baseline to unlock dynamic PulseScores, metabolic tracking, and workout logs.</p>
-        <div class="editorial-pills" style="margin-top: 20px; margin-bottom: 0;">
+        <h1 class="brand-pixel-title">TRAIN DAILY.</h1>
+        <div class="editorial-pills" style="margin-top: 16px; margin-bottom: 0;">
           <span class="editorial-pill pill-blush">HOME WORKOUT</span>
           <span class="editorial-pill pill-lime">STRENGTH</span>
           <span class="editorial-pill pill-amber">MUSCLE GAIN</span>
           <span class="editorial-pill pill-lavender">FAT BURN</span>
         </div>
-      </div>
-
-      <div class="brand-bottom-coords">
-        <span class="mono-coords">ATHLETE METRICS</span>
-        <span class="mono-tag">PULSEAI OS</span>
       </div>
     </section>
 
@@ -51,9 +44,7 @@
     <section class="auth-form-side">
       <div class="glass-form-card">
         <div class="form-header">
-          <span class="form-kicker">ONBOARDING</span>
-          <h2 class="form-title">CREATE YOUR ACCOUNT</h2>
-          <p class="form-desc">Set your athletic profile baseline.</p>
+          <h2 class="form-title">CREATE ACCOUNT</h2>
         </div>
 
         <div id="authAlert" class="alert-banner" role="alert" style="display: none;">
@@ -62,40 +53,40 @@
 
         <form id="signupForm" class="auth-form" novalidate>
           <div class="form-group">
-            <label for="name" class="form-label">Full name</label>
-            <input type="text" id="name" class="form-input" placeholder="Full name" required autocomplete="name">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" id="name" class="form-input" placeholder="Name" required autocomplete="name">
             <span class="field-error" id="nameError"></span>
           </div>
 
           <div class="form-group">
-            <label for="email" class="form-label">Email address</label>
-            <input type="email" id="email" class="form-input" placeholder="name@example.com" required autocomplete="email">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="email" class="form-input" placeholder="Email" required autocomplete="email">
             <span class="field-error" id="emailError"></span>
           </div>
 
           <div class="form-group">
             <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" class="form-input" placeholder="Password (min 6 characters)" required autocomplete="new-password">
+            <input type="password" id="password" class="form-input" placeholder="Password (min 6 chars)" required autocomplete="new-password">
             <span class="field-error" id="passwordError"></span>
           </div>
 
           <div class="form-row-triplet">
             <div class="form-group">
               <label for="weight" class="form-label">Weight (kg)</label>
-              <input type="number" id="weight" class="form-input" placeholder="Weight" step="0.5" min="30" max="300">
+              <input type="number" id="weight" class="form-input" placeholder="kg" step="0.5" min="30" max="300">
             </div>
             <div class="form-group">
               <label for="height" class="form-label">Height (cm)</label>
-              <input type="number" id="height" class="form-input" placeholder="Height" step="1" min="100" max="250">
+              <input type="number" id="height" class="form-input" placeholder="cm" step="1" min="100" max="250">
             </div>
             <div class="form-group">
-              <label for="calories" class="form-label">Daily Kcal</label>
-              <input type="number" id="calories" class="form-input" placeholder="Target kcal" step="50" min="1000" max="6000">
+              <label for="calories" class="form-label">Goal (kcal)</label>
+              <input type="number" id="calories" class="form-input" placeholder="kcal" step="50" min="1000" max="6000">
             </div>
           </div>
 
           <button type="submit" id="submitBtn" class="btn-primary">
-            <span class="btn-text">CREATE ACCOUNT &gt;&gt;&gt;</span>
+            <span class="btn-text">Get Started</span>
             <span class="btn-loader" style="display: none;"></span>
           </button>
         </form>

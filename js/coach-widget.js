@@ -87,7 +87,6 @@
                 <span class="cr7-online-dot" aria-hidden="true"></span>
                 <span class="cr7-title">Coach CR7</span>
               </div>
-              <div class="cr7-subtitle">HYBRID RAG // LIVE STATS</div>
             </div>
           </div>
           <div class="cr7-header-actions">
@@ -163,8 +162,7 @@
       if (history.length === 0 && !loading && !errorMsg) {
         messagesEl.innerHTML = `
           <div class="cr7-empty">
-            <div class="cr7-empty-badge">CHAMPION MENTALITY</div>
-            <p>No excuses today. I see your live macros and last 7 days of training. Tap a quick prompt or ask me anything.</p>
+            <p>Ask about your macros, workouts, or recovery.</p>
           </div>
         `;
       } else {
